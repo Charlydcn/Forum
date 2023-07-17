@@ -7,9 +7,10 @@
 
         private $id;
         private $title;
-        private $user;
-        private $date;
+        private $creationDate;
         private $closed;
+        private $category;
+        private $user;
 
         public function __construct($data){         
             $this->hydrate($data);       
@@ -43,7 +44,47 @@
 
                 return $this;
         }
+        
+        // DATE *********************************************************************
 
+        public function getcreationDate(){
+                $formattedDate = $this->creationDate->format("d/m/Y, H:i:s");
+            return $formattedDate;
+        }
+
+        public function setcreationDate($creationDate){
+                $this->creationDate = new \DateTime($creationDate);
+                return $this;
+        }
+        
+        // CLOSED *********************************************************************
+        
+        public function getClosed()
+        {
+                return $this->closed;
+        }
+        
+        public function setClosed($closed)
+        {
+                $this->closed = $closed;
+                
+                return $this;
+        }
+        
+        // CATEGORY *********************************************************************
+
+        public function getCategory()
+        {
+                return $this->category;
+        }
+        
+        public function setCategory($category)
+        {
+                $this->category = $category;
+                
+                return $this;
+        }
+        
         // USER *********************************************************************
 
         public function getUser()
@@ -57,30 +98,5 @@
 
                 return $this;
         }
-
-        // DATE *********************************************************************
-
-        public function getDate(){
-            $formattedDate = $this->date->format("d/m/Y, H:i:s");
-            return $formattedDate;
-        }
-
-        public function setDate($date){
-            $this->date = new \DateTime($date);
-            return $this;
-        }
- 
-        // CLOSED *********************************************************************
-
-        public function getClosed()
-        {
-                return $this->closed;
-        }
-
-        public function setClosed($closed)
-        {
-                $this->closed = $closed;
-
-                return $this;
-        }
-    }
+        
+}

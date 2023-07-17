@@ -21,7 +21,7 @@ USE `forum`;
 
 -- Listage de la structure de table forum. category
 CREATE TABLE IF NOT EXISTS `category` (
-  `id_category` int NOT NULL,
+  `id_category` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id_category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `category` (
 
 -- Listage de la structure de table forum. post
 CREATE TABLE IF NOT EXISTS `post` (
-  `id_post` int NOT NULL,
+  `id_post` int NOT NULL AUTO_INCREMENT,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `date` date DEFAULT NULL,
   `topic_id` int NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `post` (
 
 -- Listage de la structure de table forum. topic
 CREATE TABLE IF NOT EXISTS `topic` (
-  `id_topic` int NOT NULL,
+  `id_topic` int NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
   `date` date DEFAULT NULL,
   `closed` tinyint DEFAULT '0',
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `topic` (
 
 -- Listage de la structure de table forum. user
 CREATE TABLE IF NOT EXISTS `user` (
-  `id_user` int NOT NULL,
+  `id_user` int NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL DEFAULT '',
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,

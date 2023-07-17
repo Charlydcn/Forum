@@ -4,10 +4,10 @@
     use App\Manager;
     use App\DAO;
 
-    class PostManager extends Manager{
+    class CategoryManager extends Manager{
 
-        protected $className = "Model\Entities\Post";
-        protected $tableName = "post";
+        protected $className = "Model\Entities\Category";
+        protected $tableName = "category";
 
         public function __construct(){
             parent::connect();

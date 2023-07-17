@@ -6,15 +6,16 @@
     final class Post extends Entity{
 
         private $id;
-        private $user;
         private $content;
-        private $date;
+        private $creationDate;
+        private $topic;
+        private $user;
 
         public function __construct($data){         
             $this->hydrate($data);        
         }
 
-        // TITLE *********************************************************************
+        // ID *********************************************************************
         
         public function getId()
         {
@@ -42,6 +43,32 @@
                 return $this;
         }
 
+        // DATE *********************************************************************
+
+        public function getcreationDate(){
+            $formattedDate = $this->creationDate->format("d/m/Y, H:i:s");
+            return $formattedDate;
+        }
+
+        public function setcreationDate($creationDate){
+            $this->creationDate = new \DateTime($creationDate);
+            return $this;
+        }
+
+        // TOPIC *********************************************************************
+
+        public function getTopic()
+        {
+                return $this->topic;
+        }
+        
+        public function setTopic($topic)
+        {
+                $this->topic = $topic;
+
+                return $this;
+        }
+
         // USER *********************************************************************
 
         public function getUser()
@@ -55,16 +82,5 @@
 
                 return $this;
         }
-
-        // DATE *********************************************************************
-
-        public function getDate(){
-            $formattedDate = $this->date->format("d/m/Y, H:i:s");
-            return $formattedDate;
-        }
-
-        public function setDate($date){
-            $this->date = new \DateTime($date);
-            return $this;
-        }
+        
     }

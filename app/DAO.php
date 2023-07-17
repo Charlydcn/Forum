@@ -13,7 +13,7 @@
     abstract class DAO{
 
         private static $host   = 'mysql:host=127.0.0.1;port=3306';
-        private static $dbname = 'forum_dwwm3';
+        private static $dbname = 'forum';
         private static $dbuser = 'root';
         private static $dbpass = '';
 
@@ -93,10 +93,15 @@
             try{
                 $stmt = self::$bdd->prepare($sql);
                 $stmt->execute($params);
-              
-                $results = ($multiple) ? $stmt->fetchAll() : $stmt->fetch();
-
+                
+                $results = ($multiple) ? $stmt->fetchAll() : $stmt->fetch();            
                 $stmt->closeCursor();
+                
+                // var_dump($stmt);
+                // echo "<br>";
+                // echo "<br>";
+                // var_dump($results);die;
+
                 return ($results == false) ? null : $results;
             }
             catch(\Exception $e){

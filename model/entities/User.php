@@ -10,7 +10,7 @@
         private $username;
         private $password;
         private $role;
-        private $date;
+        private $registrationDate;
 
         public function __construct($data){         
             $this->hydrate($data);        
@@ -90,13 +90,13 @@
 
         // DATE *********************************************************************
 
-        public function getDate(){
-            $formattedDate = $this->date->format("d/m/Y, H:i:s");
+        public function getregistrationDate(){
+            $formattedDate = $this->registrationDate->format("d/m/Y, H:i:s");
             return $formattedDate;
         }
 
-        public function setDate($date){
-            $this->date = new \DateTime($date);
+        public function setregistrationDate($registrationDate){
+            $this->registrationDate = new \DateTime($registrationDate);
             return $this;
         }
     }

@@ -3,7 +3,7 @@
 
     class Session{
 
-        private static $categories = ['error', 'success'];
+        private static $category = ['error', 'success'];
 
         /**
         *   ajoute un message en session, dans la catégorie $categ
