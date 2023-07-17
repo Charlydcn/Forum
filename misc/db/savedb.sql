@@ -24,15 +24,21 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id_category` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id_category`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Listage des données de la table forum.category : ~0 rows (environ)
+INSERT INTO `category` (`id_category`, `name`) VALUES
+	(1, 'Technology'),
+	(2, 'News'),
+	(3, 'Sports'),
+	(4, 'Movies & TV'),
+	(5, 'Cooking');
 
 -- Listage de la structure de table forum. post
 CREATE TABLE IF NOT EXISTS `post` (
   `id_post` int NOT NULL AUTO_INCREMENT,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `date` date DEFAULT NULL,
+  `creationDate` datetime DEFAULT NULL,
   `topic_id` int NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`id_post`) USING BTREE,
@@ -40,26 +46,31 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `id_membre` (`user_id`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`),
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Listage des données de la table forum.post : ~0 rows (environ)
+INSERT INTO `post` (`id_post`, `content`, `creationDate`, `topic_id`, `user_id`) VALUES
+	(1, 'aaa', '2023-07-17 14:17:20', 1, 1);
 
 -- Listage de la structure de table forum. topic
 CREATE TABLE IF NOT EXISTS `topic` (
   `id_topic` int NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
-  `date` date DEFAULT NULL,
-  `closed` tinyint DEFAULT '0',
-  `category_id` int NOT NULL,
-  `user_id` int NOT NULL,
+  `creationDate` datetime DEFAULT NULL,
+  `closed` tinyint NOT NULL DEFAULT '0',
+  `category_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id_topic`),
   KEY `id_category` (`category_id`),
   KEY `id_membre` (`user_id`),
   CONSTRAINT `topic_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id_category`),
   CONSTRAINT `topic_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Listage des données de la table forum.topic : ~0 rows (environ)
+INSERT INTO `topic` (`id_topic`, `title`, `creationDate`, `closed`, `category_id`, `user_id`) VALUES
+	(1, 'Web Development', '2023-07-17 00:00:00', 0, 1, 1),
+	(2, 'test', '2023-07-17 14:33:44', 0, 5, 1);
 
 -- Listage de la structure de table forum. user
 CREATE TABLE IF NOT EXISTS `user` (
@@ -68,11 +79,13 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `role` varchar(20) NOT NULL,
-  `date` date DEFAULT NULL,
+  `registrationDate` datetime NOT NULL,
   PRIMARY KEY (`id_user`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table forum.user : ~0 rows (environ)
+-- Listage des données de la table forum.user : ~1 rows (environ)
+INSERT INTO `user` (`id_user`, `email`, `username`, `password`, `role`, `registrationDate`) VALUES
+	(1, 'charly@test.fr', 'charly', 'admin', 'Administrator', '2023-07-17 16:15:07');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
