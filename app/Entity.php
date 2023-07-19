@@ -4,7 +4,6 @@
     abstract class Entity{
 
         protected function hydrate($data){
-
             foreach($data as $field => $value){
                 
                 //field = marque_id
@@ -24,8 +23,9 @@
                 if(method_exists($this, $method)){
                     $this->$method($value);
                 } 
-
+                
             }
+            
         }
 
         public function getClass(){

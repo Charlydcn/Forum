@@ -77,12 +77,12 @@
 
         private function generate($rows, $class){
             foreach($rows as $row){
+
                 yield new $class($row);
             }
         }
         
         protected function getMultipleResults($rows, $class){
-
             if(is_iterable($rows)){
                 return $this->generate($rows, $class);
             }
