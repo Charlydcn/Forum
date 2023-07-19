@@ -24,11 +24,51 @@
         
         }
 
+        public function listCategories(){
+          
+            $categoryManager = new CategoryManager();
+            $category = $categoryManager->findAll(["name", "ASC"]);
+            
+             return [
+                 "view" => VIEW_DIR."forum/categoriesList.php",
+                 "data" => [
+                     "category" => $category
+                 ]
+             ];
+         
+         }
+
+        public function listTopics($id) {
+
+            $topicManager = new TopicManager();
+            $topics = $topicManager->findAll(["title", "ASC"]);
+
+            return [
+                "view" => VIEW_DIR. "forum/topicsList.php",
+                "data" => [
+                    "topics" => $topics
+                ]
+                ];
+        }
+
+        public function listUsers() {
+            
+            $userManager = new UserManager();
+            $users = $userManager->findAll(["username", "ASC"]);
+
+            return [
+                "view" => VIEW_DIR. "forum/usersList.php",
+                "data" => [
+                    "users" => $users
+                ]
+                ];
+        }
+
         public function listTopicsByCategory($id) {
 
             $topicManager = new TopicManager();
             $topics = $topicManager->listTopicsByCategory($id);
-
+            
             return [
                 "view" => VIEW_DIR."forum/topicsList.php",
                 "data" => [
@@ -38,17 +78,6 @@
         
         }
 
-        // public function listTopics($id) {
-
-        //     $postManager = new PostManager();
-        //     $posts = $postManager->listPostsByTopics($id);
-
-        //     return [
-        //         "view" => VIEW_DIR. "forum/postsList.php",
-        //         "data" => [
-        //             "posts" => $posts
-        //         ]
-        //         ];
-        // }
+        
 
     }
