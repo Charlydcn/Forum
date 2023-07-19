@@ -93,14 +93,8 @@
             try{
                 $stmt = self::$bdd->prepare($sql);
                 $stmt->execute($params);
-                
                 $results = ($multiple) ? $stmt->fetchAll() : $stmt->fetch();            
                 $stmt->closeCursor();
-                
-                // var_dump($stmt);
-                // echo "<br>";
-                // echo "<br>";
-                // var_dump($results);die;
 
                 return ($results == false) ? null : $results;
             }
