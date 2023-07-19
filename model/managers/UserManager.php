@@ -6,13 +6,12 @@
 
     class UserManager extends Manager{
 
-        protected $className = "Model\Entities\Manager";
-        protected $tableName = "manager";
+        protected $className = "Model\Entities\Topic";
+        protected $tableName = "topic";
 
 
         public function __construct(){
             parent::connect();
         }
-
 
     }
