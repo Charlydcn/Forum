@@ -9,10 +9,9 @@ $topics = $result["data"]['topics'];
 <ul>
     <?php
     foreach($topics as $topic ){
-        var_dump($topic);die;
     ?>
         <li>
-            <a href=""><?=$topic->getContent()?></a>
+            <a href=""><?=$topic->getTitle()?></a>
         </li>
 
     <?php } ?> 
