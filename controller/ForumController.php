@@ -7,6 +7,7 @@
     use App\ControllerInterface;
     use Model\Managers\TopicManager;
     use Model\Managers\CategoryManager;
+    use Model\Managers\UserManager;
     
     class ForumController extends AbstractController implements ControllerInterface{
 
@@ -21,7 +22,6 @@
                     "category" => $category
                 ]
             ];
-        
         }
 
         public function listCategories(){
@@ -41,7 +41,7 @@
         public function listTopics($id) {
 
             $topicManager = new TopicManager();
-            $topics = $topicManager->findAll(["title", "ASC"]);
+            $topics = $topicManager->findAll(["creationDate", "DESC"]);
 
             return [
                 "view" => VIEW_DIR. "forum/topicsList.php",
@@ -77,6 +77,7 @@
             ];
         
         }
+
 
         
 

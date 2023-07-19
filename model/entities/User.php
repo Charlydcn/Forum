@@ -90,12 +90,12 @@
 
         // DATE *********************************************************************
 
-        public function getregistrationDate(){
-            $formattedDate = $this->registrationDate->format("d/m/Y, H:i:s");
+        public function getRegistrationDate(){
+            $formattedDate = $this->registrationDate->format("d/m/Y");
             return $formattedDate;
         }
 
-        public function setregistrationDate($registrationDate){
+        public function setRegistrationDate($registrationDate){
             $this->registrationDate = new \DateTime($registrationDate);
             return $this;
         }

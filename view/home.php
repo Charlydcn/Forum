@@ -10,4 +10,4 @@
     </label>
     <input type="submit" name="submit" value="Log in">
 </form>
-<p>Not registered yet ? <a href="">Sign up</a></p>
+<p>Not registered yet ? <a href="index.php?ctrl=security&action=displayRegister">Register</a></p>

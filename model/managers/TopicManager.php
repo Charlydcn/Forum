@@ -21,12 +21,12 @@
                 
             $sql = "SELECT *
                     FROM ".$this->tableName." a
-                    WHERE category_id = $id"
+                    WHERE a.category_id = :id"
                     .$orderQuery;
 
             return $this->getMultipleResults(
-                DAO::select($sql), 
-                $this->className
+                DAO::select($sql,["id" => $id]), 
+                $this->className 
             );
 
         }
