@@ -1,9 +1,13 @@
-<h1>BIENVENUE SUR LE FORUM</h1>
+<h1>Welcome to the Forum</h1>
 
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ut nemo quia voluptas numquam, itaque ipsa soluta ratione eum temporibus aliquid, facere rerum in laborum debitis labore aliquam ullam cumque.</p>
-
-<p>
-    <a href="/security/login.html">Se connecter</a>
-    <span>&nbsp;-&nbsp;</span>
-    <a href="/security/register.html">S'inscrire</a>
-</p>
+<form action="index.php?ctrl=security&action=login" method="POST" autocomplete="off">
+    <h1>Log in</h1>
+    <label>Username
+        <input type="text" name="username" required>
+    </label>
+    <label>Password
+        <input type="password" name="password" required>
+    </label>
+    <input type="submit" name="submit" value="Log in">
+</form>
+<p>Not registered yet ? <a href="">Sign up</a></p>
