@@ -28,10 +28,10 @@
                             <?php
                         }
                         ?>
-                    </div>
-                    <div id="nav-right">
                         <a href="index.php?ctrl=forum&action=listCategories">Categories</a>
                         <a href="index.php?ctrl=forum&action=listTopics">Topics</a>
+                    </div>
+                    <div id="nav-right">
 
                         <?php                        
                         if(App\Session::getUser()){
