@@ -46,8 +46,8 @@
 
             $sql = "SELECT *
                     FROM ".$this->tableName." a
-                    WHERE a." . $field . " = :value
-                    ";
+                    WHERE a." . $field . " = :value";
+
 
             return $this->getOneOrNullResult(
                 DAO::select($sql, ['value' => $value], false), 

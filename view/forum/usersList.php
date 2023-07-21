@@ -41,9 +41,7 @@ if ($users !== null) {
     <?php
     }} else {
     ?>
-
         <h3>Nothing here.. (yet)</h3>
-
 
     <?php } ?> 
 

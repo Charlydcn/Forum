@@ -19,9 +19,7 @@ $topics = $result["data"]['topics'];
     <?php
     }} else {
     ?>
-
         <h3>Nothing here.. (yet)</h3>
-
     <?php } ?> 
 
 </ul>
