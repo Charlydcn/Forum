@@ -26,8 +26,14 @@ if($_SESSION['user']->getRole() === 'admin') {
     </label>
 
     <select name="role">
+        <?php
+        
+        // si l'utilisateur connecté est un admin, alors la deuxième <option> sera user, et inversement
+        $v = $user->getRole() == 'admin' ? 'user' : 'admin';
+        
+        ?>
         <option value="<?= $user->getRole() ?>"><?= $user->getRole() ?></option>
-        <option value="user">user</option>
+        <option value="<?= $v ?>"><?= $v ?></option>
     </select>
     
     <p>Member since : <?=$user->getRegistrationDate()?></p>   
