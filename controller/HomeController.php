@@ -13,10 +13,7 @@
 
         public function index(){
             
-           if (Session::getUser()){
-                $this->redirectTo('forum');
-           }
-                return [
+            return [
                     "view" => VIEW_DIR."home.php"
                 ];
             }
