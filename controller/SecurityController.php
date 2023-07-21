@@ -63,7 +63,7 @@
                                 $userManager->add(['username' => $username, 'password' => $password, 'email' => $email]);
                                 
                                 Session::addFlash("success", "Account successfully created !");        
-                                $this->redirectTo("forum", "Categories");
+                                $this->redirectTo("home");
                             }                          
                         }
                     } else {
@@ -71,12 +71,110 @@
                         Session::addFlash("error", "Passwords don't match !");
                         $this->redirectTo("security", "displayRegister");
                     }             
+                } else {
+                    // valeurs incorrectes
+                    Session::addFlash("error", "Incorrect values");
+                    $this->redirectTo("security", "displayRegister"); 
                 }
             }
 
         }
 
         public function logIn() {
+            if($_POST["submit"]) {
+
+                $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
+                $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                if ($email && $password) {
+                    // vérification que l'utilisateur existe
+                    $userManager = new UserManager();
+                    $user = $userManager->findOneBy('email', $email);
+                    
+                    if ($user) {
+                        $hash = $user->getPassword();
+
+                        if(password_verify($password, $hash)) {
+                            Session::setUser($user);
+                            Session::addFlash("success", "You have been successfully logged in");
+                            $this->redirectTo("home");
+
+                        } else {
+                            // valeurs incorrectes
+                            Session::addFlash("error", "Incorrect password");
+                            $this->redirectTo("security", "displayLogin"); 
+
+                        }
+                    } else {
+                        // utilisateur inconnu de la bdd
+                        Session::addFlash("error", "Account doesn't exist");
+                        $this->redirectTo("security", "displayLogin"); 
+                    }
+
+                } else {
+                    // valeurs incorrectes
+                    Session::addFlash("error", "Incorrect values");
+                    $this->redirectTo("security", "displayLogin"); 
+                }
+            }
+        }
+
+        public function logOff($id) {
+
+            unset($_SESSION['user']);
+            Session::addFlash("success", "You have been successfully logged off");
+            $this->redirectTo("home");
+
+        }
+
+        public function editUser($id) {
+            if (isset($_POST['submit'])) {
+                
+                $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
+                $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $pass1 = filter_input(INPUT_POST, 'pass1', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $pass2 = filter_input(INPUT_POST, 'pass2', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                if($username && $email && $role) {
+
+                    $userManager = new UserManager();
+
+                    // on vérifie si le mot de passe a été changé (si il ne l'a pas été, le form renverra un string(0))
+                    if (strlen($pass1) > 8 && strlen($pass2) > 8) {
+
+                        // et si il l'a été, on modifie la bdd en re-hashant le nouveau mot de passe
+                        if ($pass1 === $pass2 && strlen($pass1) <= 25) {
+                            $password = password_hash($pass1, PASSWORD_DEFAULT);
+        
+                            $userManager->editUserPassword($id, $password);
+                            
+                        } else {
+                            Session::addFlash("error", "Password error");
+                            $this->redirectTo("forum", "userDetails", $id);
+                        }
+
+                    }
+
+                    // modification du reste des données de l'utilisateurs
+                    $userManager->editUser($id, $username, $email, $role);
+                    $user = $userManager->findOneById($id);
+                    unset($_SESSION['user']);
+                    Session::setUser($user);
+
+                    Session::addFlash("success", "User succesfully modified");
+                    $this->redirectTo("forum", "userDetails", $id);
+
+                }
+            }
+        }
+
+        public function deleteUser($id) {
+            $userManager = new UserManager();
+            $userManager->deleteUser($id);
+
+            Session::addFlash("success", "User succesfully deleted");
+            $this->redirectTo("home");
 
         }
 
