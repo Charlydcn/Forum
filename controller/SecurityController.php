@@ -19,6 +19,12 @@
             ];
        }
 
+       public function displayLogin(){
+        return [
+           "view" => VIEW_DIR."security/login.php",
+        ];
+   }
+
         public function register() {
             if(isset($_GET['action'])) {
 
