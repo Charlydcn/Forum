@@ -8,11 +8,19 @@ $topics = $result["data"]['topics'];
 
 <ul>
     <?php
-    foreach($topics as $topic ){
+    if ($topics !== null) {
+
+        foreach($topics as $topic ){
     ?>
         <li>
             <a href=""><?=$topic->getTitle()?></a>
-        </li>
+        </li> 
+
+    <?php
+    }} else {
+    ?>
+
+        <h3>Nothing here.. (yet)</h3>
 
     <?php } ?> 
 

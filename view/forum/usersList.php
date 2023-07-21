@@ -6,6 +6,12 @@ $users = $result["data"]['users'];
 
 <h1>Users</h1>
 
+<?php
+
+if ($users !== null) {
+
+?>
+
 <table>
     <thead>
         <th>Username</th>
@@ -31,6 +37,13 @@ $users = $result["data"]['users'];
     <td>
         <?=$user->getRegistrationDate()?>
     </td>
+
+    <?php
+    }} else {
+    ?>
+
+        <h3>Nothing here.. (yet)</h3>
+
 
     <?php } ?> 
 
