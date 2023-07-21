@@ -1,6 +1,7 @@
 <?php
 
 $category = $result["data"]['category'];
+// var_dump($result["data"]["count"]);
     
 ?>
 
