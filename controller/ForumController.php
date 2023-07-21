@@ -68,13 +68,15 @@
 
             $topicManager = new TopicManager();
             $topics = $topicManager->listTopicsByCategory($id);
+
+            // $count = $this->countTopic($id);
             
             return [
                 "view" => VIEW_DIR."forum/topicsList.php",
                 "data" => [
                     "topics" => $topics
                 ]
-            ];
+                ];
         
         }
 
@@ -89,8 +91,17 @@
                     "user" => $user
                 ]
             ];
-
         }
+
+        // public function countTopics($id)
+        // {
+
+        //     $categoryManager = new CategoryManager();
+        //     $nbOfTopics = $categoryManager->countTopics($id);
+
+        //     return $nbOfTopics;
+
+        // }
 
 
         
