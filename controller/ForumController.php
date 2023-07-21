@@ -78,6 +78,20 @@
         
         }
 
+        public function userDetails($id) {
+
+            $userManager = new UserManager();
+            $user = $userManager->findOneById($id);
+
+            return [
+                "view" => VIEW_DIR."user/userDetails.php",
+                "data" => [
+                    "user" => $user
+                ]
+            ];
+
+        }
+
 
         
 
