@@ -1,7 +1,7 @@
 <form action="index.php?ctrl=security&action=login" method="POST" autocomplete="off">
     <h1>Log in</h1>
-    <label>Username
-        <input type="text" name="username" required>
+    <label>E-Mail
+        <input type="email" name="email" required>
     </label>
     <label>Password
         <input type="password" name="password" required>
