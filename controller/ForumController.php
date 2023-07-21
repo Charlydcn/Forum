@@ -69,7 +69,7 @@
             $topicManager = new TopicManager();
             $topics = $topicManager->listTopicsByCategory($id);
 
-            // $count = $this->countTopic($id);
+            // $count = $this->countTopics($id);
             
             return [
                 "view" => VIEW_DIR."forum/topicsList.php",
