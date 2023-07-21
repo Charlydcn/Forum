@@ -1,0 +1,33 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color:unset;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    margin:5% auto;
+}
+
+#nav-left {
+    display: flex;
+    gap: 10%;
+}
+
+nav a {
+    background-color: rgba(31, 147, 199, 0.247);
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5%;
+    transition: .2s;
+}
+
+nav a:hover {
+    color:white;
+    background-color: rgb(33, 59, 83);
+}
+
