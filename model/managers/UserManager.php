@@ -43,7 +43,7 @@
 
         public function deleteUser($id)
         {
-            delete($id, $tableName);
+            $this->delete($id, $tableName);
         }
 
     }
