@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   PRIMARY KEY (`id_category`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table forum.category : ~0 rows (environ)
+-- Listage des données de la table forum.category : ~5 rows (environ)
 INSERT INTO `category` (`id_category`, `name`) VALUES
 	(1, 'Technology'),
 	(2, 'News'),
@@ -40,17 +40,17 @@ CREATE TABLE IF NOT EXISTS `post` (
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `creationDate` datetime DEFAULT NULL,
   `topic_id` int NOT NULL,
-  `user_id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id_post`) USING BTREE,
   KEY `id_topic` (`topic_id`),
   KEY `id_membre` (`user_id`),
-  CONSTRAINT `post_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`),
-  CONSTRAINT `post_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`)
+  CONSTRAINT `post_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `post_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table forum.post : ~0 rows (environ)
+-- Listage des données de la table forum.post : ~1 rows (environ)
 INSERT INTO `post` (`id_post`, `content`, `creationDate`, `topic_id`, `user_id`) VALUES
-	(1, 'aaa', '2023-07-17 14:17:20', 1, 1);
+	(1, 'aaa', '2023-07-17 14:17:20', 1, NULL);
 
 -- Listage de la structure de table forum. topic
 CREATE TABLE IF NOT EXISTS `topic` (
@@ -63,29 +63,30 @@ CREATE TABLE IF NOT EXISTS `topic` (
   PRIMARY KEY (`id_topic`),
   KEY `id_category` (`category_id`),
   KEY `id_membre` (`user_id`),
-  CONSTRAINT `topic_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id_category`),
-  CONSTRAINT `topic_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`)
+  CONSTRAINT `topic_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id_category`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `topic_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table forum.topic : ~0 rows (environ)
+-- Listage des données de la table forum.topic : ~2 rows (environ)
 INSERT INTO `topic` (`id_topic`, `title`, `creationDate`, `closed`, `category_id`, `user_id`) VALUES
-	(1, 'Web Development', '2023-07-17 00:00:00', 0, 1, 1),
-	(2, 'test', '2023-07-17 14:33:44', 0, 5, 1);
+	(1, 'Web Development', '2023-07-17 00:00:00', 0, 1, NULL),
+	(2, 'test', '2023-07-17 14:33:44', 0, 5, NULL);
 
 -- Listage de la structure de table forum. user
 CREATE TABLE IF NOT EXISTS `user` (
   `id_user` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(50) NOT NULL DEFAULT '',
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `role` varchar(20) NOT NULL,
-  `registrationDate` datetime NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `role` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'user',
+  `registrationDate` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_user`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table forum.user : ~1 rows (environ)
-INSERT INTO `user` (`id_user`, `email`, `username`, `password`, `role`, `registrationDate`) VALUES
-	(1, 'charly@test.fr', 'charly', 'admin', 'Administrator', '2023-07-17 16:15:07');
+-- Listage des données de la table forum.user : ~16 rows (environ)
+INSERT INTO `user` (`id_user`, `username`, `password`, `email`, `role`, `registrationDate`) VALUES
+	(14, 'Charly', '$2y$10$VLneRmBy9zbHP/NH6BAz.Oq8DD4hdY4Qwd7todrBbPccg7Bwp7su.', 'Charly@test.fr', 'admin', '2023-07-21 11:20:36'),
+	(17, 'john', '$2y$10$Nj78rxfZs5UiweXNWm1Zo.h19CVqOMhQNuugJ34XVynjlZJ.x.k5a', 'john.doe@test.fr', 'user', '2023-07-21 14:09:58');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
