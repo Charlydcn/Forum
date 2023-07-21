@@ -23,33 +23,31 @@
                         <?php
                         if(App\Session::isAdmin()){
                             ?>
-                            <a href="index.php?ctrl=home&action=users">Users</a>
+                            <a href="index.php?ctrl=forum&action=listUsers">Users</a>
                           
                             <?php
                         }
                         ?>
                     </div>
                     <div id="nav-right">
-                    <?php
-                        
+                        <a href="index.php?ctrl=forum&action=listCategories">Categories</a>
+                        <a href="index.php?ctrl=forum&action=listTopics">Topics</a>
+
+                        <?php                        
                         if(App\Session::getUser()){
-                            ?>
-                            <a href="/security/viewProfile.html"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
-                            <a href="/security/logout.html">Log off</a>
-                            <?php
-                        }
-                        else{
-                            ?>
+                        ?>
+
+                            <a href="index.php?ctrl=forum&action=userDetails&id=<?= App\Session::getUser()->getId()?>"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getUsername()?></a>
+                            <a href="index.php?ctrl=security&action=logoff&id=<?= App\Session::getUser()->getId()?>">Log off</a>
+
+                        <?php
+                        } else {
+                        ?>
                             <a href="index.php?ctrl=security&action=displayLogin">Log in</a>
                             <a href="index.php?ctrl=security&action=displayRegister">Register</a>
-                            <a href="index.php?ctrl=forum&action=listCategories">Categories</a>
-                            <a href="index.php?ctrl=forum&action=listTopics">Topics</a>
-                            <a href="index.php?ctrl=forum&action=listUsers">Users</a>
-                        <?php
-                        }
-                   
-                        
-                    ?>
+
+                        <?php } ?>
+
                     </div>
                 </nav>
             </header>
