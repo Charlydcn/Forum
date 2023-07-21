@@ -21,71 +21,80 @@
         
         public function getId()
         {
-                return $this->id;
+            return $this->id;
         }
 
         
         public function setId($id)
         {
-                $this->id = $id;
+            $this->id = $id;
 
-                return $this;
+            return $this;
         }
 
         // EMAIL *********************************************************************
 
         public function getEmail()
         {
-                return $this->email;
+            return $this->email;
         }
 
         public function setEmail($email)
         {
-                $this->email = $email;
+            $this->email = $email;
 
-                return $this;
+            return $this;
         }
 
         // USERNAME *********************************************************************
 
         public function getUsername()
         {
-                return $this->username;
+            return $this->username;
         }
  
         public function setUsername($username)
         {
-                $this->username = $username;
+            $this->username = $username;
 
-                return $this;
+            return $this;
         }
 
         // PASSWORD *********************************************************************
 
         public function getPassword()
         {
-                return $this->password;
+            return $this->password;
         }
  
         public function setPassword($password)
         {
-                $this->password = $password;
+            $this->password = $password;
 
-                return $this;
+            return $this;
         }
 
         // ROLE *********************************************************************
 
         public function getRole()
         {
-                return $this->role;
+            return $this->role;
         }
  
         public function setRole($role)
         {
-                $this->role = $role;
+            $this->role = $role;
 
-                return $this;
+            return $this;
+        }
+
+        public function hasRole($role)
+        {
+            if(self::getRole() === $role) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         // DATE *********************************************************************
