@@ -25,18 +25,20 @@ if ($users !== null) {
     foreach($users as $user ){
     ?>
 
-    <td>
-        <a href=""><?=$user->getUsername()?></a>
-    </td>
-    <td>
-        <?=$user->getEmail()?>
-    </td>
-    <td>
-        <?=$user->getRole()?>
-    </td>
-    <td>
-        <?=$user->getRegistrationDate()?>
-    </td>
+    <tr>
+        <td>
+            <a href="index.php?ctrl=forum&action=userDetails&id=<?=$user->getId()?>"><?=$user->getUsername()?></a>
+        </td>    
+        <td>
+            <?=$user->getEmail()?>
+        </td>
+        <td>
+            <?=$user->getRole()?>
+        </td>
+        <td>
+            <?=$user->getRegistrationDate()?>
+        </td>
+    </tr>
 
     <?php
     }} else {
