@@ -159,8 +159,11 @@
                     // modification du reste des données de l'utilisateurs
                     $userManager->editUser($id, $username, $email, $role);
                     $user = $userManager->findOneById($id);
-                    unset($_SESSION['user']);
-                    Session::setUser($user);
+
+                    if ($_SESSION['user']->getId() === $user->getId()) {
+                        unset($_SESSION['user']);
+                        Session::setUser($user);
+                    }
 
                     Session::addFlash("success", "User succesfully modified");
                     $this->redirectTo("forum", "userDetails", $id);
