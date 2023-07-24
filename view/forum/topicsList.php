@@ -11,9 +11,11 @@ $topics = $result["data"]['topics'];
     if ($topics !== null) {
 
         foreach ($topics as $topic) {
+        $category = $topic->getCategory()->getName();
+
     ?>
             <li>
-                <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle() ?></a>
+                <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle()?></a> (<?=$category?>)
             </li>
 
         <?php
