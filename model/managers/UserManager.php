@@ -48,9 +48,4 @@ class UserManager extends Manager
             ]
         );
     }
-
-    public function deleteUser($id)
-    {
-        $this->delete($id, $tableName);
-    }
 }
