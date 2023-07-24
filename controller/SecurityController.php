@@ -200,6 +200,17 @@ class SecurityController extends AbstractController implements ControllerInterfa
         $categoryManager = new CategoryManager();
         $categoryManager->delete($id);
 
+        $this->redirectTo("security", "categoriesDashboard");
+    }
 
+    public function editCategories()
+    {
+        if(isset($_POST['submitEdit'])) {
+           $category1 = filter_input(INPUT_POST, '');
+        }
+
+        if(isset($_POST['submitCreate'])) {
+
+        }
     }
 }
