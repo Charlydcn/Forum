@@ -61,6 +61,19 @@ abstract class Manager
         );
     }
 
+    public function findMultipleBy($field, $value)
+    {
+
+        $sql = "SELECT *
+                    FROM " . $this->tableName . "  a
+                    WHERE a." . $field . "= :value";
+
+        return $this->getMultipleResults(
+            DAO::select($sql, ['value' => $value], false),
+            $this->className
+        );
+    }
+
     //$data = ['username' => 'Squalli', 'password' => 'dfsyfshfbzeifbqefbq', 'email' => 'sql@gmail.com'];
 
     public function add($data)
