@@ -8,6 +8,7 @@ use App\ControllerInterface;
 use Model\Managers\TopicManager;
 use Model\Managers\CategoryManager;
 use Model\Managers\UserManager;
+use Model\Managers\PostManager;
 
 class ForumController extends AbstractController implements ControllerInterface
 {
@@ -80,6 +81,20 @@ class ForumController extends AbstractController implements ControllerInterface
             "view" => VIEW_DIR . "forum/topicsList.php",
             "data" => [
                 "topics" => $topics
+            ]
+        ];
+    }
+
+    public function listPostsByTopic($id)
+    {
+
+        $postManager = new PostManager();
+        $posts = $postManager->findMultipleBy('topic_id', $id);
+
+        return [
+            "view" => VIEW_DIR . "forum/postsByTopic.php",
+            "data" => [
+                "posts" => $posts
             ]
         ];
     }
