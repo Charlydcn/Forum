@@ -8,6 +8,7 @@ final class Post extends Entity
 {
 
         private $id;
+        private $title;
         private $content;
         private $creationDate;
         private $topic;
@@ -46,15 +47,29 @@ final class Post extends Entity
                 return $this;
         }
 
+        // TITLE *********************************************************************
+
+        public function getTitle()
+        {
+                return $this->title;
+        }
+
+        public function setTitle($title)
+        {
+                $this->title = $title;
+
+                return $this;
+        }
+
         // DATE *********************************************************************
 
-        public function getcreationDate()
+        public function getCreationDate()
         {
                 $formattedDate = $this->creationDate->format("d/m/Y, H:i:s");
                 return $formattedDate;
         }
 
-        public function setcreationDate($creationDate)
+        public function setCreationDate($creationDate)
         {
                 $this->creationDate = new \DateTime($creationDate);
                 return $this;
