@@ -41,7 +41,7 @@ if ($_SESSION['user']->getRole() === 'admin') {
         <input type="submit" name="submit" value="Save changes">
 
         <a href="index.php?ctrl=security&action=deleteUser&id=<?= $user->getId() ?>">
-            Delete user
+            <i class="fa-solid fa-trash-can"></i>
         </a>
     </form>
 
