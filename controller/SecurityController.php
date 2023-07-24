@@ -7,6 +7,7 @@ use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\TopicManager;
 use Model\Managers\CategoryManager;
+use Model\Managers\PostManager;
 use Model\Managers\UserManager;
 
 class SecurityController extends AbstractController implements ControllerInterface
@@ -174,10 +175,31 @@ class SecurityController extends AbstractController implements ControllerInterfa
     public function deleteUser($id)
     {
         $userManager = new UserManager();
-        $userManager->deleteUser($id);
+        $userManager->delete($id);
         unset($_SESSION['user']);
 
         Session::addFlash("success", "User succesfully deleted");
         $this->redirectTo("home");
+    }
+
+    public function categoriesDashboard()
+    {
+        $categoryManager = new CategoryManager();
+        $categories = $categoryManager->findAll();
+
+        return [
+            "view" => VIEW_DIR . "security/categoriesDashboard.php",
+            "data" => [
+                "categories" => $categories
+            ]
+        ];
+    }
+
+    public function deleteCategory($id)
+    {
+        $categoryManager = new CategoryManager();
+        $categoryManager->delete($id);
+
+
     }
 }
