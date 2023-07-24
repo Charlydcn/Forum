@@ -31,12 +31,12 @@ class ForumController extends AbstractController implements ControllerInterface
     {
 
         $categoryManager = new CategoryManager();
-        $category = $categoryManager->findAll(["name", "ASC"]);
+        $categories = $categoryManager->findAll(["name", "ASC"]);
 
         return [
             "view" => VIEW_DIR . "forum/categoriesList.php",
             "data" => [
-                "category" => $category
+                "categories" => $categories
             ]
         ];
     }
@@ -45,7 +45,7 @@ class ForumController extends AbstractController implements ControllerInterface
     {
 
         $topicManager = new TopicManager();
-        $topics = $topicManager->findAll(["creationDate", "DESC"]);
+        $topics = $topicManager->findAll(["category_id", "ASC"]);
 
         return [
             "view" => VIEW_DIR . "forum/topicsList.php",
