@@ -24,6 +24,9 @@ if (App\Session::isAdmin()) {
 
 ?>
 
-    <a href="index.php?ctrl=security&action=categoriesDashboard">Dashboard</a>
+    <a href="index.php?ctrl=security&action=categoriesDashboard">
+        <i class="fa-solid fa-gear"></i>
+        Dashboard
+    </a>
 
 <?php } ?>
