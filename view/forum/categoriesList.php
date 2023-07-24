@@ -1,7 +1,6 @@
 <?php
 
-$category = $result["data"]['category'];
-// var_dump($result["data"]["count"]);
+$categories = $result["data"]['categories'];
 
 ?>
 
@@ -9,7 +8,7 @@ $category = $result["data"]['category'];
 
 <ul>
     <?php
-    foreach ($category as $category) {
+    foreach ($categories as $category) {
     ?>
         <li>
             <a href="index.php?ctrl=forum&action=listTopicsByCategory&id=<?= $category->getId() ?>"><?= $category->getName() ?></a>
