@@ -50,13 +50,13 @@ final class Topic extends Entity
 
         // DATE *********************************************************************
 
-        public function getcreationDate()
+        public function getCreationDate()
         {
                 $formattedDate = $this->creationDate->format("d/m/Y, H:i:s");
                 return $formattedDate;
         }
 
-        public function setcreationDate($creationDate)
+        public function setCreationDate($creationDate)
         {
                 $this->creationDate = new \DateTime($creationDate);
                 return $this;
