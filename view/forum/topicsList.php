@@ -13,7 +13,7 @@ $topics = $result["data"]['topics'];
         foreach ($topics as $topic) {
     ?>
             <li>
-                <a href=""><?= $topic->getTitle() ?></a>
+                <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle() ?></a>
             </li>
 
         <?php
