@@ -1,47 +1,52 @@
 <?php
-    namespace App;
 
-    class Session{
+namespace App;
 
-        private static $category = ['error', 'success'];
+class Session
+{
 
-        /**
-        *   ajoute un message en session, dans la catégorie $categ
-        */
-        public static function addFlash($categ, $msg){
-            $_SESSION[$categ] = $msg;
-        }
+    private static $category = ['error', 'success'];
 
-        /**
-        *   renvoie un message de la catégorie $categ, s'il y en a !
-        */
-        public static function getFlash($categ){
-            
-            if(isset($_SESSION[$categ])){
-                $msg = $_SESSION[$categ];  
-                unset($_SESSION[$categ]);
-            }
-            else $msg = "";
-            
-            return $msg;
-        }
-
-        /**
-        *   met un user dans la session (pour le maintenir connecté)
-        */
-        public static function setUser($user){
-            $_SESSION["user"] = $user;
-        }
-
-        public static function getUser(){
-            return (isset($_SESSION['user'])) ? $_SESSION['user'] : false;
-        }
-
-        public static function isAdmin(){
-            if(self::getUser() && self::getUser()->hasRole("admin")){
-                return true;
-            }
-            return false;
-        }
-
+    /**
+     *   ajoute un message en session, dans la catégorie $categ
+     */
+    public static function addFlash($categ, $msg)
+    {
+        $_SESSION[$categ] = $msg;
     }
+
+    /**
+     *   renvoie un message de la catégorie $categ, s'il y en a !
+     */
+    public static function getFlash($categ)
+    {
+
+        if (isset($_SESSION[$categ])) {
+            $msg = $_SESSION[$categ];
+            unset($_SESSION[$categ]);
+        } else $msg = "";
+
+        return $msg;
+    }
+
+    /**
+     *   met un user dans la session (pour le maintenir connecté)
+     */
+    public static function setUser($user)
+    {
+        $_SESSION["user"] = $user;
+    }
+
+    public static function getUser()
+    {
+        return (isset($_SESSION['user'])) ? $_SESSION['user'] : false;
+    }
+
+    public static function isAdmin()
+    {
+        if (self::getUser() && self::getUser()->hasRole("admin")) {
+            return true;
+        }
+        return false;
+    }
+}

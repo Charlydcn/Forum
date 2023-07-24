@@ -10,17 +10,27 @@ $topics = $result["data"]['topics'];
     <?php
     if ($topics !== null) {
 
-        foreach($topics as $topic ){
+        foreach ($topics as $topic) {
     ?>
-        <li>
-            <a href=""><?=$topic->getTitle()?></a>
-        </li> 
+            <li>
+                <a href=""><?= $topic->getTitle() ?></a>
+            </li>
 
-    <?php
-    }} else {
-    ?>
+        <?php
+        }
+    } else {
+        ?>
         <h3>Nothing here.. (yet)</h3>
-    <?php } ?> 
+    <?php } ?>
 
 </ul>
-  
+
+<?php
+
+if (App\Session::isAdmin()) {
+
+?>
+
+    <a href="index.php?ctrl=security&action=topicsDashboard">Dashboard</a>
+
+<?php } ?>

@@ -1,8 +1,9 @@
 <?php
 
-    namespace App;
+namespace App;
 
-    interface ControllerInterface{
+interface ControllerInterface
+{
 
-        public function index();
-    }
+    public function index();
+}

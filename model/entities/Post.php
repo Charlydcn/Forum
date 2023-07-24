@@ -1,9 +1,11 @@
 <?php
-    namespace Model\Entities;
 
-    use App\Entity;
+namespace Model\Entities;
 
-    final class Post extends Entity{
+use App\Entity;
+
+final class Post extends Entity
+{
 
         private $id;
         private $content;
@@ -11,17 +13,18 @@
         private $topic;
         private $user;
 
-        public function __construct($data){         
-            $this->hydrate($data);        
+        public function __construct($data)
+        {
+                $this->hydrate($data);
         }
 
         // ID *********************************************************************
-        
+
         public function getId()
         {
                 return $this->id;
         }
-        
+
         public function setId($id)
         {
                 $this->id = $id;
@@ -45,14 +48,16 @@
 
         // DATE *********************************************************************
 
-        public function getcreationDate(){
-            $formattedDate = $this->creationDate->format("d/m/Y, H:i:s");
-            return $formattedDate;
+        public function getcreationDate()
+        {
+                $formattedDate = $this->creationDate->format("d/m/Y, H:i:s");
+                return $formattedDate;
         }
 
-        public function setcreationDate($creationDate){
-            $this->creationDate = new \DateTime($creationDate);
-            return $this;
+        public function setcreationDate($creationDate)
+        {
+                $this->creationDate = new \DateTime($creationDate);
+                return $this;
         }
 
         // TOPIC *********************************************************************
@@ -61,7 +66,7 @@
         {
                 return $this->topic;
         }
-        
+
         public function setTopic($topic)
         {
                 $this->topic = $topic;
@@ -75,12 +80,11 @@
         {
                 return $this->user;
         }
- 
+
         public function setUser($user)
         {
                 $this->user = $user;
 
                 return $this;
         }
-        
-    }
+}

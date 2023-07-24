@@ -1,111 +1,116 @@
 <?php
-    namespace Model\Entities;
 
-    use App\Entity;
+namespace Model\Entities;
 
-    final class User extends Entity{
+use App\Entity;
 
-        private $id;
-        private $email;
-        private $username;
-        private $password;
-        private $role;
-        private $registrationDate;
+final class User extends Entity
+{
 
-        public function __construct($data){         
-            $this->hydrate($data);        
-        }
+    private $id;
+    private $email;
+    private $username;
+    private $password;
+    private $role;
+    private $registrationDate;
+
+    public function __construct($data)
+    {
+        $this->hydrate($data);
+    }
 
 
-        // ID *********************************************************************
-        
-        public function getId()
-        {
-            return $this->id;
-        }
+    // ID *********************************************************************
 
-        
-        public function setId($id)
-        {
-            $this->id = $id;
+    public function getId()
+    {
+        return $this->id;
+    }
 
-            return $this;
-        }
 
-        // EMAIL *********************************************************************
+    public function setId($id)
+    {
+        $this->id = $id;
 
-        public function getEmail()
-        {
-            return $this->email;
-        }
+        return $this;
+    }
 
-        public function setEmail($email)
-        {
-            $this->email = $email;
+    // EMAIL *********************************************************************
 
-            return $this;
-        }
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
-        // USERNAME *********************************************************************
+    public function setEmail($email)
+    {
+        $this->email = $email;
 
-        public function getUsername()
-        {
-            return $this->username;
-        }
- 
-        public function setUsername($username)
-        {
-            $this->username = $username;
+        return $this;
+    }
 
-            return $this;
-        }
+    // USERNAME *********************************************************************
 
-        // PASSWORD *********************************************************************
+    public function getUsername()
+    {
+        return $this->username;
+    }
 
-        public function getPassword()
-        {
-            return $this->password;
-        }
- 
-        public function setPassword($password)
-        {
-            $this->password = $password;
+    public function setUsername($username)
+    {
+        $this->username = $username;
 
-            return $this;
-        }
+        return $this;
+    }
 
-        // ROLE *********************************************************************
+    // PASSWORD *********************************************************************
 
-        public function getRole()
-        {
-            return $this->role;
-        }
- 
-        public function setRole($role)
-        {
-            $this->role = $role;
+    public function getPassword()
+    {
+        return $this->password;
+    }
 
-            return $this;
-        }
+    public function setPassword($password)
+    {
+        $this->password = $password;
 
-        public function hasRole($role)
-        {
-            if(self::getRole() === $role) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        return $this;
+    }
 
-        // DATE *********************************************************************
+    // ROLE *********************************************************************
 
-        public function getRegistrationDate(){
-            $formattedDate = $this->registrationDate->format("d/m/Y");
-            return $formattedDate;
-        }
+    public function getRole()
+    {
+        return $this->role;
+    }
 
-        public function setRegistrationDate($registrationDate){
-            $this->registrationDate = new \DateTime($registrationDate);
-            return $this;
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function hasRole($role)
+    {
+        if (self::getRole() === $role) {
+            return true;
+        } else {
+            return false;
         }
     }
+
+    // DATE *********************************************************************
+
+    public function getRegistrationDate()
+    {
+        $formattedDate = $this->registrationDate->format("d/m/Y");
+        return $formattedDate;
+    }
+
+    public function setRegistrationDate($registrationDate)
+    {
+        $this->registrationDate = new \DateTime($registrationDate);
+        return $this;
+    }
+}

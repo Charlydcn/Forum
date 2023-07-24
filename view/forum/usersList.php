@@ -12,42 +12,41 @@ if ($users !== null) {
 
 ?>
 
-<table>
-    <thead>
-        <th>Username</th>
-        <th>E-Mail</th>
-        <th>Role</th>
-        <th>Registration date</th>
-    </thead>
-    <tbody>
-    
-    <?php
-    foreach($users as $user ){
-    ?>
+    <table>
+        <thead>
+            <th>Username</th>
+            <th>E-Mail</th>
+            <th>Role</th>
+            <th>Registration date</th>
+        </thead>
+        <tbody>
 
-    <tr>
-        <td>
-            <a href="index.php?ctrl=forum&action=userDetails&id=<?=$user->getId()?>"><?=$user->getUsername()?></a>
-        </td>    
-        <td>
-            <?=$user->getEmail()?>
-        </td>
-        <td>
-            <?=$user->getRole()?>
-        </td>
-        <td>
-            <?=$user->getRegistrationDate()?>
-        </td>
-    </tr>
+            <?php
+            foreach ($users as $user) {
+            ?>
 
-    <?php
-    }} else {
-    ?>
-        <h3>Nothing here.. (yet)</h3>
+                <tr>
+                    <td>
+                        <a href="index.php?ctrl=forum&action=userDetails&id=<?= $user->getId() ?>"><?= $user->getUsername() ?></a>
+                    </td>
+                    <td>
+                        <?= $user->getEmail() ?>
+                    </td>
+                    <td>
+                        <?= $user->getRole() ?>
+                    </td>
+                    <td>
+                        <?= $user->getRegistrationDate() ?>
+                    </td>
+                </tr>
 
-    <?php } ?> 
+            <?php
+            }
+        } else {
+            ?>
+            <h3>Nothing here.. (yet)</h3>
 
-    </tbody>
-</table>
+        <?php } ?>
 
-  
+        </tbody>
+    </table>

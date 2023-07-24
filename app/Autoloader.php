@@ -1,39 +1,42 @@
 <?php
-	namespace App;
-	
-	class Autoloader{
 
-		public static function register(){
-			spl_autoload_register(array(__CLASS__, 'autoload'));
-		}
+namespace App;
 
-		public static function autoload($class){
+class Autoloader
+{
 
-			//$class = Model\Managers\VehiculeManager (FullyQualifiedClassName)
-			//namespace = Model\Managers, nom de la classe = VehiculeManager
+	public static function register()
+	{
+		spl_autoload_register(array(__CLASS__, 'autoload'));
+	}
 
-			// on explose notre variable $class par \
-			$parts = preg_split('#\\\#', $class);
-			//$parts = ['Model', 'Managers', 'VehiculeManager']
+	public static function autoload($class)
+	{
 
-			// on extrait le dernier element 
-			$className = array_pop($parts);
-			//$className = VehiculeManager
+		//$class = Model\Managers\VehiculeManager (FullyQualifiedClassName)
+		//namespace = Model\Managers, nom de la classe = VehiculeManager
 
-			// on créé le chemin vers la classe
-			// on utilise DS car plus propre et meilleure portabilité entre les différents systèmes (windows/linux) 
+		// on explose notre variable $class par \
+		$parts = preg_split('#\\\#', $class);
+		//$parts = ['Model', 'Managers', 'VehiculeManager']
 
-			$path = strtolower(implode(DS, $parts));
-			//$path = 'model/manager'
-			$file = $className.'.php';
-			//$file = VehiculeManager.php
+		// on extrait le dernier element 
+		$className = array_pop($parts);
+		//$className = VehiculeManager
 
-			$filepath = BASE_DIR.$path.DS.$file;
-			//$filepath = model/managers/VehiculeManager.php
-			if(file_exists($filepath)){
-              
-				require $filepath;
-			}
-			
+		// on créé le chemin vers la classe
+		// on utilise DS car plus propre et meilleure portabilité entre les différents systèmes (windows/linux) 
+
+		$path = strtolower(implode(DS, $parts));
+		//$path = 'model/manager'
+		$file = $className . '.php';
+		//$file = VehiculeManager.php
+
+		$filepath = BASE_DIR . $path . DS . $file;
+		//$filepath = model/managers/VehiculeManager.php
+		if (file_exists($filepath)) {
+
+			require $filepath;
 		}
 	}
+}
