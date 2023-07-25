@@ -4,7 +4,7 @@ $categories = $result["data"]['categories'];
 
 ?>
 
-<h1>Topics category</h1>
+<h1>Topics categories</h1>
 
 <ul>
     <?php
