@@ -259,27 +259,40 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
     public function createPost($id)
     {
-        // var_dump(htmlspecialchars_decode(htmlentities($a)));die; A LA SORTIE
-        // var_dump(htmlspecialchars($_POST["textarea"]));die; A L'ENTREE
         if(isset($_POST['submit'])) {
             $newPost = filter_input(INPUT_POST, 'newPost', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            
-            if($newPost) {
-                $postManager = new PostManager();
-                $postManager->add(
-                    [
-                        'content' => $newPost,
-                        'topic_id' => $id,
-                        'user_id' => $_SESSION['user']->getId()
-                    ]
-                    );
-                Session::addFlash("success", "Post successfully sent");
-                $this->redirectTo("forum", "listPostsByTopic", $id);
 
-            } else {
+            // vérification du message (si il n'est pas vide avec que des espaces)
+
+            // supprime les espaces spéciaux et les espaces vides du message
+            $trimmedPost = preg_replace('/(&nbsp;|\s)+/', '', $newPost);
+
+            //  supprime toutes les balises HTML
+            $strippedPost = strip_tags(html_entity_decode($trimmedPost));
+
+            // si après trim et strip il ne reste plus rien, on ne créer pas le post
+            if (empty($strippedPost)) {
                 Session::addFlash("error", "Please enter valid text in your post");
                 $this->redirectTo("forum", "listPostsByTopic", $id);
+            } else {
+                if($newPost) {
+                    $postManager = new PostManager();
+                    $postManager->add(
+                        [
+                            'content' => $newPost,
+                            'topic_id' => $id,
+                            'user_id' => $_SESSION['user']->getId()
+                        ]
+                        );
+                    Session::addFlash("success", "Post successfully sent");
+                    $this->redirectTo("forum", "listPostsByTopic", $id);
+    
+                } else {
+                    Session::addFlash("error", "Please enter valid text in your post");
+                    $this->redirectTo("forum", "listPostsByTopic", $id);
+                }
             }
+
         }
     }
 
