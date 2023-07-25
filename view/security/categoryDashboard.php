@@ -16,7 +16,7 @@ if (App\Session::isAdmin()) {
 
 </form>
 
-<a href="index.php?ctrl=security&action=deleteCategory&id=<?=$category->getId()?>">
+<a href="index.php?ctrl=security&action=deleteCategory&id=<?=$category->getId()?>" class="delete-btn">
     <i class="fa-solid fa-trash-can"></i>
 </a>
 <br>
