@@ -111,4 +111,17 @@ class ForumController extends AbstractController implements ControllerInterface
         ];
     }
 
+    public function postDetails($id)
+    {
+
+        $postManager = new PostManager();
+        $post = $postManager->findOneById($id);
+        
+        return [
+            "view" => VIEW_DIR . "forum/postDetails.php",
+            "data" => [
+                "post" => $post
+            ]
+            ];
+    }
 }
