@@ -31,20 +31,11 @@ class CategoryManager extends Manager
         );        
     }
 
-    // public function editUser($id, $username, $email, $role)
-    // {
-    //     $sql = "UPDATE user
-    //             SET username = :username, email = :email, role = :role
-    //             WHERE id_user = :id";
+    public function createCategory($categoryName)
+    {
+        $sql = "INSERT INTO category (name)
+                VALUES ('$categoryName')";
 
-    //     DAO::update(
-    //         $sql,
-    //         [
-    //             "id" => $id,
-    //             "username" => $username,
-    //             "email" => $email,
-    //             "role" => $role
-    //         ]
-    //     );
-    // }
+        DAO::insert($sql);
+    }
 }
