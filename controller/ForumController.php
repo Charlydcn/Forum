@@ -75,8 +75,6 @@ class ForumController extends AbstractController implements ControllerInterface
         $topicManager = new TopicManager();
         $topics = $topicManager->listTopicsByCategory($id);
 
-        // $count = $this->countTopics($id);
-
         return [
             "view" => VIEW_DIR . "forum/topicsList.php",
             "data" => [
@@ -89,7 +87,7 @@ class ForumController extends AbstractController implements ControllerInterface
     {
 
         $postManager = new PostManager();
-        $posts = $postManager->findMultipleBy('topic_id', $id);
+        $posts = $postManager->findAllByForeignId('topic', $id);
 
         return [
             "view" => VIEW_DIR . "forum/postsByTopic.php",
@@ -112,18 +110,5 @@ class ForumController extends AbstractController implements ControllerInterface
             ]
         ];
     }
-
-    // public function countTopics($id)
-    // {
-
-    //     $categoryManager = new CategoryManager();
-    //     $nbOfTopics = $categoryManager->countTopics($id);
-
-    //     return $nbOfTopics;
-
-    // }
-
-
-
 
 }
