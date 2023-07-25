@@ -8,33 +8,26 @@ if (App\Session::isAdmin()) {
 
 <h1>Categories dashboard</h1>
 
-<form action="index.php?ctrl=security&action=editCategories" method="POST" autocomplete="off">
+    <ul>
+        <?php
+        foreach($categories as $category) {
+        ?>
 
-<?php
-$i = 1;
-foreach($categories as $category) {
-?>
+            <li>
+                <a href="index.php?ctrl=security&action=categoryDashboard&id=<?=$category->getId()?>"><?=$category->getName()?></a>
+            </li>
+                
+        <?php } ?>
+    </ul>
 
-    <input type="text" name="category<?=$i?>" value="<?=$category->getName()?>">
-    <a href="index.php?ctrl=security&action=deleteCategory&id=<?= $category->getId() ?>">
-        <i class="fa-solid fa-trash-can"></i>
-    </a>
-    <br>
-
-<?php
-$i++;
-}
-?>
-
-<input type="submit" name="submitEdit" value="Edit">
-<br>
+<form action="index.php?ctrl=security&action=createCategory" method="POST" autocomplete="off">
 
 <label>
     Add a new category :
-    <input type="text">
+    <input type="text" name="newCategory" maxlength="20" required>
 </label>
 
-<input type="submit" name="submitCreate" value="Create">
+<input type="submit" name="submit" value="Create">
 
 </form>
 
