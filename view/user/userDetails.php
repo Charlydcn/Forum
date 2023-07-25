@@ -2,7 +2,7 @@
 
 $user = $result['data']['user'];
 
-if ($_SESSION['user']->getRole() === 'admin') {
+if (App\Session::isAdmin() || $user->getId() === $_SESSION['user']->getId()) {
 ?>
 
     <form action="index.php?ctrl=security&action=editUser&id=<?= $user->getId() ?>" method="POST" autocomplete="off">
@@ -25,22 +25,27 @@ if ($_SESSION['user']->getRole() === 'admin') {
             <input type="password" name="pass2" value="">
         </label>
 
+        <?php
+        if(App\Session::isAdmin()) {
+        ?>
         <select name="role">
             <?php
 
             // si l'utilisateur connecté est un admin, alors la deuxième <option> sera user, et inversement
-            $v = $user->getRole() == 'admin' ? 'user' : 'admin';
+            $v = App\Session::isAdmin() ? 'user' : 'admin';
 
             ?>
             <option value="<?= $user->getRole() ?>"><?= $user->getRole() ?></option>
             <option value="<?= $v ?>"><?= $v ?></option>
         </select>
 
+        <?php } ?>
+
         <p>Member since : <?= $user->getRegistrationDate() ?></p>
 
         <input type="submit" name="submit" value="Save changes">
 
-        <a href="index.php?ctrl=security&action=deleteUser&id=<?= $user->getId() ?>">
+        <a href="index.php?ctrl=security&action=deleteUser&id=<?= $user->getId() ?>" class="delete-btn">
             <i class="fa-solid fa-trash-can"></i>
         </a>
     </form>
