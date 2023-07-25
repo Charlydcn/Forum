@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table forum.post : ~20 rows (environ)
+-- Listage des données de la table forum.post : ~37 rows (environ)
 INSERT INTO `post` (`id_post`, `content`, `topic_id`, `user_id`, `creationDate`) VALUES
 	(23, 'Appreciating the unique mockumentary format of The Office', 14, 14, '2023-07-25 14:48:15'),
 	(26, 'Mine is definitely Jim! His pranks on Dwight are legendary.', 14, 14, '2023-07-25 14:48:15'),
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `topic` (
   CONSTRAINT `topic_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table forum.topic : ~0 rows (environ)
+-- Listage des données de la table forum.topic : ~15 rows (environ)
 INSERT INTO `topic` (`id_topic`, `title`, `closed`, `category_id`, `user_id`, `creationDate`) VALUES
 	(3, 'A.I', 0, 1, 14, '2023-07-25 16:17:10'),
 	(4, 'Hardware', 0, 1, 14, '2023-07-25 16:17:10'),
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id_user`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table forum.user : ~2 rows (environ)
+-- Listage des données de la table forum.user : ~3 rows (environ)
 INSERT INTO `user` (`id_user`, `username`, `password`, `email`, `role`, `registrationDate`) VALUES
 	(14, 'Charly', '$2y$10$VLneRmBy9zbHP/NH6BAz.Oq8DD4hdY4Qwd7todrBbPccg7Bwp7su.', 'Charly@test.fr', 'admin', '2023-07-21 11:20:36'),
 	(31, 'compteuser', '$2y$10$EUPzZ6.5PMnZ8Q7OLfOk0uTD5uXd.ba7Uzmo.osQ64jvNcaMNYxHa', 'user@gmail.com', 'user', '2023-07-24 09:25:42'),
