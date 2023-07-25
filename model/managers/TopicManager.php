@@ -33,21 +33,4 @@ class TopicManager extends Manager
         );
     }
 
-    // public function countTopics($id)
-    // {
-
-    //     $sql = "SELECT COUNT(*) as topic_count
-    //             FROM category
-    //             INNER JOIN topic ON category.id_category = topic.category_id
-    //             WHERE category.id_category = :id
-    //             GROUP BY category.id_category";
-
-    //     $count = $this->getOneOrNullResult(
-    //         DAO::select($sql, ["id" => $id]),
-    //         'category'
-    //     );
-    //     return $count;
-
-    // }
-
 }
