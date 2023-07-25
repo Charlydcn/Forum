@@ -15,7 +15,7 @@ $topics = $result["data"]['topics'];
 
     ?>
             <li>
-                <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle()?></a> (<?=$category?>)
+                <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle()?></a>
             </li>
 
         <?php
