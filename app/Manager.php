@@ -18,7 +18,6 @@ abstract class Manager
      */
     public function findAll($order = null)
     {
-
         $orderQuery = ($order) ?
             "ORDER BY " . $order[0] . " " . $order[1] :
             "";
@@ -35,7 +34,6 @@ abstract class Manager
 
     public function findOneById($id)
     {
-
         $sql = "SELECT *
                     FROM " . $this->tableName . " a
                     WHERE a.id_" . $this->tableName . " = :id
@@ -49,7 +47,6 @@ abstract class Manager
 
     public function findOneBy($field, $value)
     {
-
         $sql = "SELECT *
                     FROM " . $this->tableName . " a
                     WHERE a." . $field . " = :value";
@@ -61,15 +58,14 @@ abstract class Manager
         );
     }
 
-    public function findMultipleBy($field, $value)
+    public function findAllByForeignId($foreignTable, $id)
     {
-
         $sql = "SELECT *
-                    FROM " . $this->tableName . "  a
-                    WHERE a." . $field . "= :value";
+                FROM " . $this->tableName . "
+                WHERE " . $foreignTable . "_id = :id";
 
         return $this->getMultipleResults(
-            DAO::select($sql, ['value' => $value], false),
+            DAO::select($sql, ['id' => $id]),
             $this->className
         );
     }
