@@ -199,7 +199,6 @@ class SecurityController extends AbstractController implements ControllerInterfa
     {
         $categoryManager = new CategoryManager();
         $category = $categoryManager->findOneById($id);
-        // var_dump(VIEW_DIR . "layout.php");die;
 
         return [
             "view" => VIEW_DIR . "security/categoryDashboard.php",
@@ -256,5 +255,43 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
 
         }
+    }
+
+    public function createPost($id)
+    {
+        // var_dump(htmlspecialchars_decode(htmlentities($a)));die; A LA SORTIE
+        // var_dump(htmlspecialchars($_POST["textarea"]));die; A L'ENTREE
+        if(isset($_POST['submit'])) {
+            $newPost = filter_input(INPUT_POST, 'newPost', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            if($newPost) {
+                $postManager = new PostManager();
+                $postManager->add(
+                    [
+                        'content' => $newPost,
+                        'topic_id' => $id,
+                        'user_id' => $_SESSION['user']->getId()
+                    ]
+                    );
+                Session::addFlash("success", "Post successfully sent");
+                $this->redirectTo("forum", "listPostsByTopic", $id);
+
+            } else {
+                Session::addFlash("error", "Please enter valid text in your post");
+                $this->redirectTo("forum", "listPostsByTopic", $id);
+            }
+        }
+    }
+
+    public function deletePost($id)
+    {
+        $postManager = new PostManager();
+        $post = $postManager->findOneById($id);
+        $topicId = $post->getTopic()->getId();
+        $postManager->delete($id);
+
+        Session::addFlash("success", "Post succesfully deleted");
+        $this->redirectTo("forum", "listPostsByTopic", $topicId);
+
     }
 }
