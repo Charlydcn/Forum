@@ -9,3 +9,7 @@
     <input type="submit" name="submit" value="Log in">
 </form>
 <p>Not registered yet ? <a href="index.php?ctrl=security&action=displayRegister">Register</a></p>
+
+<?php
+$css = 'login.css'
+?>
