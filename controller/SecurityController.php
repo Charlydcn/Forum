@@ -234,11 +234,27 @@ class SecurityController extends AbstractController implements ControllerInterfa
         $categoryManager = new CategoryManager();
         $categoryManager->delete($id);
 
+        Session::addFlash("success", "Category succesfully deleted");
         $this->redirectTo("security", "categoriesDashboard");
     }
 
     public function createCategory()
     {
+        if(isset($_POST['submit'])) {
 
+            $categoryName = filter_input(INPUT_POST, 'newCategory', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            if($categoryName) {
+                $category = new CategoryManager();
+                $category->createCategory($categoryName);
+                Session::addFlash("success", "Category succesfully created");
+                $this->redirectTo("security", "categoriesDashboard");
+            } else {
+                Session::addFlash("error", "Incorrect category name");
+                $this->redirectTo("security", "categoriesDashboard");
+            }
+
+
+        }
     }
 }
