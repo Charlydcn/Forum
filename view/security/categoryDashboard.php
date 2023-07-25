@@ -16,6 +16,11 @@ if (App\Session::isAdmin()) {
 
 </form>
 
+<a href="index.php?ctrl=security&action=deleteCategory&id=<?=$category->getId()?>">
+    <i class="fa-solid fa-trash-can"></i>
+</a>
+<br>
+
 <a href="index.php?ctrl=security&action=categoriesDashboard">Return</a>
 
 <?php } else { ?>
