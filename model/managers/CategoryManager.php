@@ -15,4 +15,36 @@ class CategoryManager extends Manager
     {
         parent::connect();
     }
+
+    public function editCategory($id, $categoryName)
+    {
+        $sql = "UPDATE category
+                SET name = :categoryName
+                WHERE id_category = :id";
+
+        DAO::update(
+            $sql,
+            [
+                "categoryName" => $categoryName,
+                "id" => $id
+            ]
+        );        
+    }
+
+    // public function editUser($id, $username, $email, $role)
+    // {
+    //     $sql = "UPDATE user
+    //             SET username = :username, email = :email, role = :role
+    //             WHERE id_user = :id";
+
+    //     DAO::update(
+    //         $sql,
+    //         [
+    //             "id" => $id,
+    //             "username" => $username,
+    //             "email" => $email,
+    //             "role" => $role
+    //         ]
+    //     );
+    // }
 }
