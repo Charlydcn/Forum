@@ -142,24 +142,43 @@ class SecurityController extends AbstractController implements ControllerInterfa
             if ($username && $email && $role) {
 
                 $userManager = new UserManager();
+                $user = $userManager->findOneById($id);
 
+                // PASSWORD                
                 // on vérifie si le mot de passe a été changé (si il ne l'a pas été, le form renverra un string(0))
-                if (strlen($pass1) > 8 && strlen($pass2) > 8) {
-
+                // (si l'utilisateur remet le même mot de passe qu'il avait déjà, ça fait quand même une requête mais c'est pas gênant)
+                if (strlen($pass1) > 8) {
                     // et si il l'a été, on modifie la bdd en re-hashant le nouveau mot de passe
                     if ($pass1 === $pass2 && strlen($pass1) <= 25) {
+                        // PASSWORD_DEFAULT utilisera (depuis PHP 5.5.0) automatiquement PASSWORD_BCRYPT qui est très sécurisé
                         $password = password_hash($pass1, PASSWORD_DEFAULT);
-
                         $userManager->editUserPassword($id, $password);
                     } else {
-                        Session::addFlash("error", "Password error");
-                        $this->redirectTo("forum", "userDetails", $id);
+                        // Session::addFlash("error", "Password error");
+                        // $this->redirectTo("forum", "userDetails", $id);
+                        // FAUT QUE D'ABORD ON MODIFIE TOUT, PUIS USERNAME, PUIS PASSWORD POUR MIEUX GERER LES ERREURS,
+                        // CAR LA, CETTE BOUCLE EST INUTILE, SI J'ECRIS DANS PASS1 ET PAS PASS2 OU QUE ILS NE SONT
+                        // PAS PAREILS, L'UTILISATEUR NE SAURA PAS QUE SON MDP N'EST PAS MODIFIE
                     }
                 }
 
-                // modification du reste des données de l'utilisateurs
-                $userManager->editUser($id, $username, $email, $role);
-                $user = $userManager->findOneById($id);
+                // USERNAME
+                $u = $userManager->findOneBy('username', $username);
+                // si l'username a été modifié :
+                if($user->getUsername() !== $username) {
+                    // on vérifie si le nouvel username est disponible                    
+                    if(!$u || !isset($u)) {
+                        // disponible
+                        $userManager->editUsername($username, $id);                    
+                    } else {
+                        // indisponible
+                        Session::addFlash("error", "Username already used");
+                        $this->redirectTo("forum", "userDetails", $id);
+                    }
+                }
+                
+                // LE RESTE                
+                $userManager->editUser($id, $email, $role);
 
                 if ($_SESSION['user']->getId() === $user->getId()) {
                     unset($_SESSION['user']);
@@ -168,6 +187,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
                 Session::addFlash("success", "User succesfully modified");
                 $this->redirectTo("forum", "userDetails", $id);
+
             }
         }
     }

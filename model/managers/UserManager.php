@@ -17,21 +17,29 @@ class UserManager extends Manager
         parent::connect();
     }
 
-    public function editUser($id, $username, $email, $role)
+    public function editUser($id, $email, $role)
     {
         $sql = "UPDATE user
-                SET username = :username, email = :email, role = :role
+                SET email = :email, role = :role
                 WHERE id_user = :id";
 
         DAO::update(
             $sql,
             [
                 "id" => $id,
-                "username" => $username,
                 "email" => $email,
                 "role" => $role
             ]
         );
+    }
+
+    public function editUsername($username, $id)
+    {
+        $sql = "UPDATE user
+        SET username = :username
+        WHERE id_user = :id";
+
+        DAO::update($sql, ["username" => $username, "id" => $id]);
     }
 
     public function editUserPassword($id, $password)

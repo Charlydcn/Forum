@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/style.css">
-    <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/<?= $css ?>">
+    <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/<?=$css?>">
     <title>FORUM</title>
 </head>
 
@@ -87,10 +87,8 @@
                     'searchreplace visualblocks code fullscreen',
                     'insertdatetime media table paste code help wordcount'
                 ],
-                toolbar: 'undo redo | formatselect | ' +
-                    'bold italic backcolor | alignleft aligncenter ' +
-                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                    'removeformat | help',
+                toolbar: 'undo redo | formatselect | bold italic backcolor',
+
                 content_css: '//www.tiny.cloud/css/codepen.min.css'
             });
         })
