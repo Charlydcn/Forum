@@ -33,7 +33,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
     public function register()
     {
-        if (isset($_GET['action'])) {
+        if (isset($_POST['submit'])) {
 
             $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
@@ -86,7 +86,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
     public function logIn()
     {
-        if ($_POST["submit"]) {
+        if ($_POST['submit']) {
 
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
             $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -195,6 +195,40 @@ class SecurityController extends AbstractController implements ControllerInterfa
         ];
     }
 
+    public function categoryDashboard($id)
+    {
+        $categoryManager = new CategoryManager();
+        $category = $categoryManager->findOneById($id);
+        // var_dump(VIEW_DIR . "layout.php");die;
+
+        return [
+            "view" => VIEW_DIR . "security/categoryDashboard.php",
+            "data" => [
+                "category" => $category
+            ]
+        ];
+        
+    }
+
+    public function editCategory($id)
+    {
+        if(isset($_POST['submit'])) {
+
+            $categoryName = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            if ($categoryName) {
+                $category = new CategoryManager();
+                $category->editCategory($id, $categoryName);
+                Session::addFlash("success", "Category succesfully modified");
+                $this->redirectTo("security", "categoryDashboard&id=$id");
+            } else {
+                Session::addFlash("error", "Incorrect category name");
+                $this->redirectTo("security", "categoryDashboard&id=$id");
+            }
+
+        }
+    }
+    
     public function deleteCategory($id)
     {
         $categoryManager = new CategoryManager();
@@ -203,14 +237,8 @@ class SecurityController extends AbstractController implements ControllerInterfa
         $this->redirectTo("security", "categoriesDashboard");
     }
 
-    public function editCategories()
+    public function createCategory()
     {
-        if(isset($_POST['submitEdit'])) {
-           $category1 = filter_input(INPUT_POST, '');
-        }
 
-        if(isset($_POST['submitCreate'])) {
-
-        }
     }
 }
