@@ -391,4 +391,45 @@ class SecurityController extends AbstractController implements ControllerInterfa
         $this->redirectTo("forum", "listPostsByTopic", $topicId);
 
     }
+
+    public function editPost($id)
+    {
+        if(isset($_POST['submit'])) {
+            $newPost = filter_input(INPUT_POST, 'post', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            // on instancie un PostManager pour utiliser la fonction qu'on a créé à l'intérieur de ce dernier
+            // et pour récupérer le topic_id du post qu'on modifie (pour le redirect)
+            $postManager = new PostManager();
+            $post = $postManager->findOneById($id);
+            $topicId = $post->getTopic()->getId();
+
+            // vérification du message (si il n'est pas vide avec que des espaces)
+            // supprime les espaces spéciaux et les espaces vides du message
+            $trimmedPost = preg_replace('/(&nbsp;|\s)+/', '', $newPost);
+            //  supprime toutes les balises HTML
+            $strippedPost = strip_tags(html_entity_decode($trimmedPost));
+            // si après trim et strip il ne reste plus rien, on ne crée pas le post
+            if (empty($strippedPost)) {
+                Session::addFlash("error", "Please enter valid text in your post");
+                $this->redirectTo("forum", "listPostsByTopic", $topicId);
+            } else {
+                // on vérifie que l'utilisateur a bien modifié son post avant de faire la requête pour éviter une requête inutile
+                if ($newPost !== $post->getContent()) {
+                    if ($newPost) {
+                        $postManager->editPost($id, $newPost);
+                        Session::addFlash("success", "Post successfully sent");
+                        $this->redirectTo("forum", "listPostsByTopic", $topicId);
+        
+                    } else {
+                        Session::addFlash("error", "Please enter valid text in your post");
+                        $this->redirectTo("forum", "listPostsByTopic", $topicId);
+                    }
+                } else {
+                    $this->redirectTo("forum", "listPostsByTopic", $topicId);
+                }
+            }
+        } else {
+            $this->redirectTo("home");
+        }
+    }
 }
