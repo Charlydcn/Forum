@@ -123,7 +123,6 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
     public function logOff($id)
     {
-
         unset($_SESSION['user']);
         Session::addFlash("success", "You have been successfully logged off");
         $this->redirectTo("home");
@@ -139,56 +138,117 @@ class SecurityController extends AbstractController implements ControllerInterfa
             $pass1 = filter_input(INPUT_POST, 'pass1', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $pass2 = filter_input(INPUT_POST, 'pass2', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            if ($username && $email && $role) {
+            $userManager = new UserManager();
+            $user = $userManager->findOneById($id);
 
-                $userManager = new UserManager();
-                $user = $userManager->findOneById($id);
 
-                // PASSWORD                
-                // on vérifie si le mot de passe a été changé (si il ne l'a pas été, le form renverra un string(0))
-                // (si l'utilisateur remet le même mot de passe qu'il avait déjà, ça fait quand même une requête mais c'est pas gênant)
-                if (strlen($pass1) > 8) {
-                    // et si il l'a été, on modifie la bdd en re-hashant le nouveau mot de passe
-                    if ($pass1 === $pass2 && strlen($pass1) <= 25) {
-                        // PASSWORD_DEFAULT utilisera (depuis PHP 5.5.0) automatiquement PASSWORD_BCRYPT qui est très sécurisé
-                        $password = password_hash($pass1, PASSWORD_DEFAULT);
-                        $userManager->editUserPassword($id, $password);
-                    } else {
-                        // Session::addFlash("error", "Password error");
-                        // $this->redirectTo("forum", "userDetails", $id);
-                        // FAUT QUE D'ABORD ON MODIFIE TOUT, PUIS USERNAME, PUIS PASSWORD POUR MIEUX GERER LES ERREURS,
-                        // CAR LA, CETTE BOUCLE EST INUTILE, SI J'ECRIS DANS PASS1 ET PAS PASS2 OU QUE ILS NE SONT
-                        // PAS PAREILS, L'UTILISATEUR NE SAURA PAS QUE SON MDP N'EST PAS MODIFIE
-                    }
-                }
-
-                // USERNAME
-                $u = $userManager->findOneBy('username', $username);
-                // si l'username a été modifié :
-                if($user->getUsername() !== $username) {
-                    // on vérifie si le nouvel username est disponible                    
-                    if(!$u || !isset($u)) {
-                        // disponible
-                        $userManager->editUsername($username, $id);                    
-                    } else {
-                        // indisponible
-                        Session::addFlash("error", "Username already used");
+            // PASSWORD
+            // on vérifie que le mdp a été changé
+            if (is_string($pass1) && !empty($pass1)) {
+                // on vérifie que le mot de passe est correct et que les deux correspondent
+                if($pass1 && $pass1 === $pass2) {
+                    // on récupère le hash du password actuel de l'utilisateur
+                    $hash = $user->getPassword();
+                    // on compare le hash du password actuel avec le password donné dans le formulaire, donc si l'utilisateur donne le même
+                    // mot de passe qui est déjà en bdd, on le redirige, erreur etc.
+                    if(password_verify($pass1, $hash)) {
+                        Session::addFlash("error", "New password is the same as the old one");
                         $this->redirectTo("forum", "userDetails", $id);
+                        die;
+                    } else {
+                        // on vérifie qu'il n'y ait pas d'espace vide dans le mot de passe, et qu'il soit entre 8 et 25 caractères
+                        if (strpos($pass1, ' ') === false && strlen($pass1) <= 25 && strlen($pass1) >= 8) {
+                            // !! TOUTE LES CONDITIONS SONT REMPLIES !!
+                            $password = password_hash($pass1, PASSWORD_DEFAULT);
+                            
+                            // SUCCESS !!
+                            $userManager->editPassword($id, $password);
+
+                        } else {
+                            // si il y a des espaces vides, on redirige, erreur etc.
+                            Session::addFlash("error", "Passwords can't have empty spaces and have to be 8-25 characters");
+                            $this->redirectTo("forum", "userDetails", $id);
+                            die;
+                        }
                     }
+                } else {
+                    Session::addFlash("error", "Incorrect password or passwords don't match");
+                    $this->redirectTo("forum", "userDetails", $id);
+                    die;
                 }
-                
-                // LE RESTE                
-                $userManager->editUser($id, $email, $role);
-
-                if ($_SESSION['user']->getId() === $user->getId()) {
-                    unset($_SESSION['user']);
-                    Session::setUser($user);
-                }
-
-                Session::addFlash("success", "User succesfully modified");
-                $this->redirectTo("forum", "userDetails", $id);
-
             }
+
+            // USERNAME            
+            $userUsername = $userManager->findOneBy('username', $username);
+            // on vérifie que l'username passe le filter_input et ne contient pas d'espace
+            if ($user->getUsername() !== $username) {
+                if ($username && strpos($username, ' ') === false) {
+                    // on vérifie qu'il n'est pas déjà utilisé en bdd
+                    if (!$userUsername) {
+                             
+                        // SUCCESS !!
+                        $userManager->editUsername($username, $id);
+
+                    } else {
+                        Session::addFlash("error", "Username unavailable");
+                        $this->redirectTo("forum", "userDetails", $id);
+                        die;    
+                    }
+                } else {
+                    Session::addFlash("error", "Incorrect username");
+                    $this->redirectTo("forum", "userDetails", $id);
+                    die;
+                }
+            }
+
+            // EMAIL
+            $userEmail = $userManager->findOneBy('email', $email); 
+
+            // on vérifie si l'utilisateur a modifié l'email
+            if ($email !== $user->getEmail()) {
+                // filter_input
+                if ($email) {
+                    // et que l'email n'est pas déjà utilisé
+                    if (!$userEmail) {
+                            
+                        // SUCCESS !!
+                        $userManager->editEmail($id, $email);
+                       
+                    } else {
+                        Session::addFlash("error", "Email already used");
+                        $this->redirectTo("forum", "userDetails", $id);
+                        die;
+                    }
+                } else {
+                    Session::addFlash("error", "Incorrect email or email already used");
+                    $this->redirectTo("forum", "userDetails", $id);
+                    die;
+                }
+            }
+
+            // ROLE
+            if ($role !== $user->getRole()) {
+                if ($role) {
+                            
+                    // SUCCESS !!
+                    $userManager->editRole($id, $role);
+                    $this->redirectTo("forum", "userDetails", $id);
+
+                } else {
+                    Session::addFlash("error", "Incorrect role");
+                    $this->redirectTo("forum", "userDetails", $id);
+                    die;
+                }
+            }
+
+            Session::addFlash("success", "User succesfully modified");
+            // si l'utilisateur modifié était celui connecté en session, on l'unset et le set pour actualiser les données 
+            $user = $userManager->findOneById($id);
+            if ($_SESSION['user']->getId() === $user->getId()) {
+                unset($_SESSION['user']);
+                Session::setUser($user);
+            }
+            $this->redirectTo("forum", "userDetails", $id);
         }
     }
 
@@ -196,8 +256,9 @@ class SecurityController extends AbstractController implements ControllerInterfa
     {
         $userManager = new UserManager();
         $userManager->delete($id);
-        unset($_SESSION['user']);
-
+        if (Session::getUser($id)) {
+            unset($_SESSION['user']);
+        }
         Session::addFlash("success", "User succesfully deleted");
         $this->redirectTo("home");
     }
@@ -245,6 +306,8 @@ class SecurityController extends AbstractController implements ControllerInterfa
                 $this->redirectTo("security", "categoryDashboard&id=$id");
             }
 
+        } else {
+            $this->redirectTo("home");
         }
     }
     
@@ -272,8 +335,8 @@ class SecurityController extends AbstractController implements ControllerInterfa
                 Session::addFlash("error", "Incorrect category name");
                 $this->redirectTo("security", "categoriesDashboard");
             }
-
-
+        } else {
+            $this->redirectTo("home");
         }
     }
 
@@ -312,7 +375,8 @@ class SecurityController extends AbstractController implements ControllerInterfa
                     $this->redirectTo("forum", "listPostsByTopic", $id);
                 }
             }
-
+        } else {
+            $this->redirectTo("home");
         }
     }
 
