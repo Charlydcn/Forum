@@ -1,7 +1,10 @@
 <?php 
 $posts = $result['data']['posts'];
+$topic = $result['data']['topic'];
 
 ?>
+
+<h1><?= $topic->getTitle(); ?></h1>
 
 <?php
 foreach ($posts as $post) {
@@ -15,14 +18,15 @@ foreach ($posts as $post) {
 
         <?= $post->getCreationDate() ?>
         <?php
-        if($post->getUser()->getId() === $_SESSION['user']->getId() || App\Session::isAdmin()) {        
+        if(App\Session::getUser()) {
+            if($post->getUser()->getId() === $_SESSION['user']->getId() || App\Session::isAdmin()) {        
         ?>
 
         <a href="index.php?ctrl=security&action=deletePost&id=<?=$post->getId()?>" class="delete-btn">
             <i class="fa-solid fa-trash-can"></i>
         </a>
         
-        <?php } ?>
+        <?php }} ?>
     </div>
 
     <div> <!-- POST MAIN -->
@@ -32,7 +36,7 @@ foreach ($posts as $post) {
 
 <?php
 }
-if(isset($_SESSION['user'])) {
+if(App\Session::getUser()) {
 ?>
 
 <form action="index.php?ctrl=security&action=createPost&id=<?=$post->getTopic()->getId()?>" method="POST">
