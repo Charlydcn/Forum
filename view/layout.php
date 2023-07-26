@@ -87,7 +87,8 @@
                     'searchreplace visualblocks code fullscreen',
                     'insertdatetime media table paste code help wordcount'
                 ],
-                toolbar: 'undo redo | formatselect | bold italic backcolor',
+                toolbar: 'undo redo | bold italic backcolor',
+                width: 500,
 
                 content_css: '//www.tiny.cloud/css/codepen.min.css'
             });
