@@ -1,0 +1,35 @@
+.fa-trash-can {
+    position:relative;
+}
+
+.fa-pencil {
+    position:absolute;
+    cursor: pointer;
+}
+
+.hidden {
+    display:none;
+}
+
+.visible {
+    display:initial;
+}
+
+.postHeader {
+    font-size: 12px;
+}
+
+.postHeader a:first-of-type {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.forumPost {
+    border: 1px solid #c1c1c1;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.postMain p:last-of-type {
+    font-size: 11px;
+}
