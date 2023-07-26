@@ -89,10 +89,14 @@ class ForumController extends AbstractController implements ControllerInterface
         $postManager = new PostManager();
         $posts = $postManager->findAllByForeignId('topic', $id);
 
+        $topicManager = new TopicManager();
+        $topic = $topicManager->findOneById($id);
+
         return [
             "view" => VIEW_DIR . "forum/postsByTopic.php",
             "data" => [
-                "posts" => $posts
+                "posts" => $posts,
+                "topic" => $topic
             ]
         ];
     }
@@ -109,19 +113,5 @@ class ForumController extends AbstractController implements ControllerInterface
                 "user" => $user
             ]
         ];
-    }
-
-    public function postDetails($id)
-    {
-
-        $postManager = new PostManager();
-        $post = $postManager->findOneById($id);
-        
-        return [
-            "view" => VIEW_DIR . "forum/postDetails.php",
-            "data" => [
-                "post" => $post
-            ]
-            ];
     }
 }
