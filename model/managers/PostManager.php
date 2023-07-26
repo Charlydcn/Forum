@@ -16,4 +16,19 @@ class PostManager extends Manager
         parent::connect();
     }
 
+    public function editPost($id, $content)
+    {
+        $sql = "UPDATE post
+                SET content = :content, modificationDate = CURRENT_TIMESTAMP
+                WHERE id_post = :id";
+
+        DAO::update(
+            $sql,
+            [
+                "content" => $content,
+                "id" => $id
+            ]
+        );        
+    }
+
 }
