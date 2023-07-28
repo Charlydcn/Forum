@@ -498,7 +498,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
             // si après trim et strip il ne reste plus rien, on ne créer pas le post
             if (!empty($strimmedTopicTitle)) {
-                if ($topicTitle) {
+                if ($topicTitle && strlen($topicTitle) <= 20) {
                     $topic = new TopicManager();
                     $topic->editTopic($id, $topicTitle);
                     Session::addFlash("success", "Topic succesfully modified");
@@ -541,7 +541,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
             var_dump($strimmedTopicTitle);die;
             // si après trim et strip il ne reste plus rien, on ne créer pas le post
             if (!empty($strimmedTopicTitle)) {
-                if($topicTitle) {
+                if($topicTitle && strlen($topicTitle) <= 20) {
                     $topic = new TopicManager();
                     $topic->createTopic($topicTitle);
                     Session::addFlash("success", "Topic succesfully created");
