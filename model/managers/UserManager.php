@@ -76,4 +76,19 @@ class UserManager extends Manager
             ]
         );
     }
+
+    public function editBan($id, $ban)
+    {
+        $sql = "UPDATE user
+                SET ban = :ban
+                WHERE id_user = :id";
+
+        DAO::update(
+            $sql,
+            [
+                "id" => $id,
+                "ban" => $ban
+            ]
+        );
+    }
 }

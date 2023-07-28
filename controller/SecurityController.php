@@ -137,9 +137,12 @@ class SecurityController extends AbstractController implements ControllerInterfa
             $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $pass1 = filter_input(INPUT_POST, 'pass1', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $pass2 = filter_input(INPUT_POST, 'pass2', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
+            $ban = filter_input(INPUT_POST, 'ban');
+            
             $userManager = new UserManager();
             $user = $userManager->findOneById($id);
+            
+            $ban === null ? $ban = 0 : $ban = 1; 
 
 
             // PASSWORD
@@ -181,7 +184,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
             // USERNAME            
             $userUsername = $userManager->findOneBy('username', $username);
             // on vérifie que l'username passe le filter_input et ne contient pas d'espace
-            if ($user->getUsername() !== $username) {
+            if ($user->getUsername() != $username) {
                 if ($username && strpos($username, ' ') === false) {
                     // on vérifie qu'il n'est pas déjà utilisé en bdd
                     if (!$userUsername) {
@@ -205,7 +208,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
             $userEmail = $userManager->findOneBy('email', $email); 
 
             // on vérifie si l'utilisateur a modifié l'email
-            if ($email !== $user->getEmail()) {
+            if ($email != $user->getEmail()) {
                 // filter_input
                 if ($email) {
                     // et que l'email n'est pas déjà utilisé
@@ -227,18 +230,33 @@ class SecurityController extends AbstractController implements ControllerInterfa
             }
 
             // ROLE
-            if ($role !== $user->getRole()) {
-                if ($role) {
-                            
-                    // SUCCESS !!
-                    $userManager->editRole($id, $role);
-                    $this->redirectTo("forum", "userDetails", $id);
-
-                } else {
-                    Session::addFlash("error", "Incorrect role");
-                    $this->redirectTo("forum", "userDetails", $id);
-                    die;
+            if (Session::getUser()->getRole() == 'admin') {
+                if ($role != $user->getRole()) {
+                    if ($role) {
+                               
+                        // SUCCESS !!
+                        $userManager->editRole($id, $role);
+                    } else {
+                        Session::addFlash("error", "Incorrect role");
+                        $this->redirectTo("forum", "userDetails", $id);
+                        die;
+                    }
                 }
+            }
+
+            // BAN 
+            if (Session::getUser()->getRole() == 'admin') {
+                if ($ban != $user->getBan()) {
+                    if ($ban == 0 || $ban == 1) {
+                        
+                        // SUCCESS !!
+                        $userManager->editBan($id, $ban);
+                    } else {
+                        Session::addFlash("error", "Incorrect ban data");
+                        $this->redirectTo("forum", "userDetails", $id);
+                        die;
+                    }
+                }            
             }
 
             Session::addFlash("success", "User succesfully modified");
@@ -248,6 +266,8 @@ class SecurityController extends AbstractController implements ControllerInterfa
                 unset($_SESSION['user']);
                 Session::setUser($user);
             }
+
+
             $this->redirectTo("forum", "userDetails", $id);
         }
     }

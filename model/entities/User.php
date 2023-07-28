@@ -12,6 +12,7 @@ final class User extends Entity
     private $username;
     private $password;
     private $role;
+    private $ban;
     private $registrationDate;
 
     public function __construct($data)
@@ -98,6 +99,21 @@ final class User extends Entity
         } else {
             return false;
         }
+    }
+
+    // BAN *********************************************************************
+
+    public function getBan()
+    {
+        return $this->ban;
+    }
+
+
+    public function setBan($ban)
+    {
+        $this->ban = $ban;
+
+        return $this;
     }
 
     // DATE *********************************************************************

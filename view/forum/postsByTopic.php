@@ -2,7 +2,7 @@
 $posts = $result['data']['posts'];
 $topic = $result['data']['topic'];
 
-$css = 'postsByTopic.css';
+$css = 'posts.css';
 ?>
 
 <h1><?= $topic->getTitle(); ?></h1>
@@ -20,7 +20,7 @@ foreach ($posts as $post) {
             <?= $post->getCreationDate() ?>
             
             <?php
-            if(App\Session::getUser()) {
+            if(App\Session::getUser() && App\Session::getUser()->getBan() == 0) {
                 if($post->getUser()->getId() === $_SESSION['user']->getId() || App\Session::isAdmin()) {        
             ?>
     
@@ -47,7 +47,7 @@ foreach ($posts as $post) {
 
 <?php
 }
-if(App\Session::getUser()) {
+if(App\Session::getUser() && App\Session::getUser()->getBan() == 0) {
 ?>
 
 <form action="index.php?ctrl=security&action=createPost&id=<?=$post->getTopic()->getId()?>" method="POST">
