@@ -13,6 +13,8 @@ final class Topic extends Entity
         private $closed;
         private $category;
         private $user;
+        private $nbPosts;
+        private $lastActivity;
 
         public function __construct($data)
         {
@@ -52,7 +54,7 @@ final class Topic extends Entity
 
         public function getCreationDate()
         {
-                $formattedDate = $this->creationDate->format("d/m/Y, H:i:s");
+                $formattedDate = $this->creationDate->format("d/m/Y, H:i");
                 return $formattedDate;
         }
 
@@ -101,6 +103,34 @@ final class Topic extends Entity
         {
                 $this->user = $user;
 
+                return $this;
+        }
+
+        // NbPosts *********************************************************************
+
+        public function getNbPosts()
+        {
+                return $this->nbPosts;
+        }
+
+        public function setNbPosts($nbPosts)
+        {
+                $this->nbPosts = $nbPosts;
+
+                return $this;
+        }
+
+        // LastActivity *********************************************************************
+
+        public function getLastActivity()
+        {
+                $formattedDate = $this->lastActivity->format("d/m/Y H:i");
+                return $formattedDate;
+        }
+
+        public function setLastActivity($lastActivity)
+        {
+                $this->lastActivity = new \DateTime($lastActivity);
                 return $this;
         }
 }
