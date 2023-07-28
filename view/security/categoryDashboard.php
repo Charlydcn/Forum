@@ -6,13 +6,14 @@ if (App\Session::isAdmin()) {
 
 ?>
 
-<h1>Edit category (<?= $category->getName() ?>)</h1>
+<h1>Edit category (<?= $category->getName()?>)</h1>
 
 <form action="index.php?ctrl=security&action=editCategory&id=<?=$category->getId()?>" method="POST" autocomplete="off">
 
-    <input type="text" name="category" value="<?=$category->getName()?>"required>
+    <input type="text" name="category" value="<?=$category->getName()?>" maxlength="20" required>
 
     <input type="submit" name="submit" value="Edit">
+    <p>(20 characters max)</p>
 
 </form>
 

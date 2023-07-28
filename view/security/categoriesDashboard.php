@@ -23,7 +23,7 @@ if (App\Session::isAdmin()) {
 <form action="index.php?ctrl=security&action=createCategory" method="POST" autocomplete="off">
 
 <label>
-    Add a new category :
+    Add a new category : (20 characters max)
     <input type="text" name="newCategory" maxlength="20" required>
 </label>
 
