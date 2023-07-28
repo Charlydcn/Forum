@@ -18,19 +18,39 @@ class TopicManager extends Manager
 
     public function listTopicsByCategory($id, $order = null)
     {
-        $orderQuery = ($order) ?
-            "ORDER BY " . $order[0] . " " . $order[1] :
-            "";
-
-        $sql = "SELECT *
-                    FROM " . $this->tableName . " a
-                    WHERE a.category_id = :id"
-            . $orderQuery;
+        $sql = "SELECT t.*, subquery.lastActivity, subquery.nbPosts
+                FROM topic t
+                INNER JOIN (
+                    SELECT topic_id, MAX(creationDate) AS lastActivity, COUNT(id_post) AS nbPosts
+                    FROM post
+                    GROUP BY topic_id
+                ) subquery ON t.id_topic = subquery.topic_id
+                WHERE t.category_id = :id
+                ORDER BY lastActivity DESC";
 
         return $this->getMultipleResults(
             DAO::select($sql, ["id" => $id]),
             $this->className
         );
     }
+
+    public function listTopics()
+    {
+        $sql = "SELECT t.*, subquery.lastActivity, subquery.nbPosts
+                FROM topic t
+                INNER JOIN (
+                    SELECT topic_id, MAX(creationDate) AS lastActivity, COUNT(id_post) AS nbPosts
+                    FROM post
+                    GROUP BY topic_id
+                ) subquery ON t.id_topic = subquery.topic_id
+                ORDER BY lastActivity DESC";
+
+        return $this->getMultipleResults(
+            DAO::select($sql),
+            $this->className
+        );
+    }
+
+
 
 }
