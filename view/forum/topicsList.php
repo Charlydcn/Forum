@@ -2,6 +2,8 @@
 
 $topics = $result["data"]['topics'];
 
+$css = 'topicsList.css';
+
 ?>
 
 <h1>Topics</h1>
@@ -11,11 +13,13 @@ $topics = $result["data"]['topics'];
     if ($topics !== null) {
 
         foreach ($topics as $topic) {
-        $category = $topic->getCategory()->getName();
 
     ?>
             <li>
-                <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic->getTitle()?></a>
+                <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>">
+                    <?= $topic->getTitle()?>
+                </a>
+                <span>(<?=$topic->getNbPosts()?> post(s), last activity : <?=$topic->getLastActivity()?>)</span>
             </li>
 
         <?php
@@ -33,6 +37,9 @@ if (App\Session::isAdmin()) {
 
 ?>
 
-    <a href="index.php?ctrl=security&action=topicsDashboard">Dashboard</a>
+    <a href="index.php?ctrl=security&action=topicsDashboard">
+    <i class="fa-solid fa-gear"></i>
+        Dashboard
+    </a>
 
 <?php } ?>
