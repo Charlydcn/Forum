@@ -45,7 +45,7 @@ class ForumController extends AbstractController implements ControllerInterface
     {
 
         $topicManager = new TopicManager();
-        $topics = $topicManager->findAll(["category_id", "ASC"]);
+        $topics = $topicManager->listTopics();
 
         return [
             "view" => VIEW_DIR . "forum/topicsList.php",
@@ -54,6 +54,20 @@ class ForumController extends AbstractController implements ControllerInterface
             ]
         ];
     }
+    
+    public function listTopicsByCategory($id)
+    {
+
+        $topicManager = new TopicManager();
+        $topics = $topicManager->listTopicsByCategory($id);
+
+        return [
+            "view" => VIEW_DIR . "forum/topicsList.php",
+            "data" => [
+                "topics" => $topics
+                ]
+            ];
+        }
 
     public function listUsers()
     {
@@ -68,22 +82,8 @@ class ForumController extends AbstractController implements ControllerInterface
             ]
         ];
     }
-
-    public function listTopicsByCategory($id)
-    {
-
-        $topicManager = new TopicManager();
-        $topics = $topicManager->listTopicsByCategory($id);
-
-        return [
-            "view" => VIEW_DIR . "forum/topicsList.php",
-            "data" => [
-                "topics" => $topics
-            ]
-        ];
-    }
-
-    public function listPostsByTopic($id)
+        
+        public function listPostsByTopic($id)
     {
 
         $postManager = new PostManager();
