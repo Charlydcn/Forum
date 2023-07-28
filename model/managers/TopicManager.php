@@ -51,6 +51,26 @@ class TopicManager extends Manager
         );
     }
 
+    public function editTopic($id, $topicTitle)
+    {
+        $sql = "UPDATE topic
+                SET title = :topicTitle
+                WHERE id_topic = :id";
 
+        DAO::update(
+            $sql,
+            [
+                "topicTitle" => $topicTitle,
+                "id" => $id
+            ]
+        );        
+    }
 
+    public function createTopic($topicTitle)
+    {
+        $sql = "INSERT INTO topic (title)
+                VALUES ('$topicTitle')";
+
+        DAO::insert($sql);
+    }
 }
