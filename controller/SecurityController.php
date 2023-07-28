@@ -266,7 +266,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
     public function categoriesDashboard()
     {
         $categoryManager = new CategoryManager();
-        $categories = $categoryManager->findAll();
+        $categories = $categoryManager->findAll(["name", "ASC"]);
 
         return [
             "view" => VIEW_DIR . "security/categoriesDashboard.php",
@@ -293,17 +293,28 @@ class SecurityController extends AbstractController implements ControllerInterfa
     public function editCategory($id)
     {
         if(isset($_POST['submit'])) {
-
             $categoryName = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            // vérification de la catégorie (si il n'est pas vide avec que des espaces)
+            // supprime les espaces spéciaux et les espaces vides de la catégorie
+            $trimmedCateg = preg_replace('/(&nbsp;|\s)+/', '', $categoryName);
+            //  supprime toutes les balises HTML
+            $strippedCateg = strip_tags(html_entity_decode($trimmedCateg));
+            // si après trim et strip il ne reste plus rien, on ne créer pas la catégorie
             
-            if ($categoryName) {
-                $category = new CategoryManager();
-                $category->editCategory($id, $categoryName);
-                Session::addFlash("success", "Category succesfully modified");
-                $this->redirectTo("security", "categoryDashboard&id=$id");
+            if (empty($strippedCateg)) {
+                Session::addFlash("error", "Please enter valid text in your category");
+                $this->redirectTo("security", "categoryDashboard", $id);
             } else {
-                Session::addFlash("error", "Incorrect category name");
-                $this->redirectTo("security", "categoryDashboard&id=$id");
+                if ($categoryName && strlen($categoryName) <= 20) {
+                    $category = new CategoryManager();
+                    $category->editCategory($id, $categoryName);
+                    Session::addFlash("success", "Category succesfully modified");
+                    $this->redirectTo("security", "categoryDashboard&id=$id");
+                } else {
+                    Session::addFlash("error", "Incorrect category name");
+                    $this->redirectTo("security", "categoryDashboard&id=$id");
+                }
             }
 
         } else {
@@ -326,14 +337,26 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
             $categoryName = filter_input(INPUT_POST, 'newCategory', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
-            if($categoryName) {
-                $category = new CategoryManager();
-                $category->createCategory($categoryName);
-                Session::addFlash("success", "Category succesfully created");
+            // vérification de la catégorie (si il n'est pas vide avec que des espaces)
+            // supprime les espaces spéciaux et les espaces vides de la catégorie
+            $trimmedCateg = preg_replace('/(&nbsp;|\s)+/', '', $categoryName);
+            //  supprime toutes les balises HTML
+            $strippedCateg = strip_tags(html_entity_decode($trimmedCateg));
+            // si après trim et strip il ne reste plus rien, on ne créer pas la catégorie
+
+            if (empty($strippedCateg)) {
+                Session::addFlash("error", "Please enter valid text in your category");
                 $this->redirectTo("security", "categoriesDashboard");
             } else {
-                Session::addFlash("error", "Incorrect category name");
-                $this->redirectTo("security", "categoriesDashboard");
+                if($categoryName && strlen($categoryName) <= 20) {
+                    $category = new CategoryManager();
+                    $category->createCategory($categoryName);
+                    Session::addFlash("success", "Category succesfully created");
+                    $this->redirectTo("security", "categoriesDashboard");
+                } else {
+                    Session::addFlash("error", "Incorrect category name");
+                    $this->redirectTo("security", "categoriesDashboard");
+                }
             }
         } else {
             $this->redirectTo("home");
@@ -427,6 +450,109 @@ class SecurityController extends AbstractController implements ControllerInterfa
                 } else {
                     $this->redirectTo("forum", "listPostsByTopic", $topicId);
                 }
+            }
+        } else {
+            $this->redirectTo("home");
+        }
+    }
+
+    public function topicsDashboard()
+    {
+        $topicManager = new TopicManager();
+        $topics =  $topicManager->findAll();
+
+        return [
+            "view" => VIEW_DIR . "security/topicsDashboard.php",
+            "data" => [
+                "topics" => $topics
+            ]
+        ];
+    }
+
+    public function topicDashboard($id)
+    {
+        $topicManager = new TopicManager();
+        $topic = $topicManager->findOneById($id);
+
+        return [
+            "view" => VIEW_DIR . "security/topicDashboard.php",
+            "data" => [
+                "topic" => $topic
+            ]
+        ];
+        
+    }
+
+    public function editTopic($id)
+    {
+        if(isset($_POST['submit'])) {
+
+            $topicTitle = filter_input(INPUT_POST, 'topicTitle', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            // vérification du topic (si il n'est pas vide avec que des espaces)
+            // supprime les espaces spéciaux et les espaces vides du message
+            $trimmedTopicTitle = preg_replace('/(&nbsp;|\s)+/', '', $topicTitle);
+
+            //  supprime toutes les balises HTML
+            $strimmedTopicTitle = strip_tags(html_entity_decode($trimmedTopicTitle));
+
+            // si après trim et strip il ne reste plus rien, on ne créer pas le post
+            if (!empty($strimmedTopicTitle)) {
+                if ($topicTitle) {
+                    $topic = new TopicManager();
+                    $topic->editTopic($id, $topicTitle);
+                    Session::addFlash("success", "Topic succesfully modified");
+                    $this->redirectTo("security", "topicDashboard&id=$id");
+                } else {
+                    Session::addFlash("error", "Incorrect topic name");
+                    $this->redirectTo("security", "topicDashboard&id=$id");
+                }
+            } else {
+                Session::addFlash("error", "Incorrect topic name");
+                $this->redirectTo("security", "topicDashboard&id=$id");
+            }
+        } else {
+            $this->redirectTo("home");
+        }
+    }
+
+    public function deleteTopic($id)
+    {
+        $topicManager = new topicManager();
+        $topicManager->delete($id);
+
+        Session::addFlash("success", "Topic succesfully deleted");
+        $this->redirectTo("security", "topicsDashboard");
+    }
+
+    public function createTopic()
+    {
+        if(isset($_POST['submit'])) {
+
+            $topicTitle = filter_input(INPUT_POST, 'topicTitle', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            // vérification du topic (si il n'est pas vide avec que des espaces)
+            // supprime les espaces spéciaux et les espaces vides du message
+            $trimmedTopicTitle = preg_replace('/(&nbsp;|\s)+/', '', $topicTitle);
+
+            //  supprime toutes les balises HTML
+            $strimmedTopicTitle = strip_tags(html_entity_decode($trimmedTopicTitle));
+            
+            var_dump($strimmedTopicTitle);die;
+            // si après trim et strip il ne reste plus rien, on ne créer pas le post
+            if (!empty($strimmedTopicTitle)) {
+                if($topicTitle) {
+                    $topic = new TopicManager();
+                    $topic->createTopic($topicTitle);
+                    Session::addFlash("success", "Topic succesfully created");
+                    $this->redirectTo("security", "topicsDashboard");
+                } else {
+                    Session::addFlash("error", "Incorrect topic name");
+                    $this->redirectTo("security", "topicsDashboard");
+                }
+            } else {
+                Session::addFlash("error", "Incorrect topic name. ");
+                $this->redirectTo("security", "topicDashboard");
             }
         } else {
             $this->redirectTo("home");
