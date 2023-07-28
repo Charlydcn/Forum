@@ -101,6 +101,23 @@ class ForumController extends AbstractController implements ControllerInterface
         ];
     }
 
+    public function listPostsByUser($id)
+    {
+        $postManager = new PostManager();
+        $posts = $postManager->findAllByForeignId('user', $id);
+
+        $userManager = new UserManager();
+        $user = $userManager->findOneById($id);
+
+        return [
+            "view" => VIEW_DIR . "user/postsByUser.php",
+            "data" => [
+                "posts" => $posts,
+                "user" => $user
+            ]
+        ];
+    }
+
     public function userDetails($id)
     {
 
