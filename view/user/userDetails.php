@@ -29,14 +29,25 @@ if(App\Session::getUser($id)) {
             </label>
 
             <?php
-            // si l'utilisateur est un admin, on affiche le menu select pour qu'il puisse changer le rôle de tout le monde
             if(App\Session::isAdmin()) {
             ?>
 
                 <select name="role">
+                    <?php
+                    // si l'utilisateur connecté est un admin, alors la deuxième <option> sera user, et inversement
+                    $v = $user->getRole() == 'user' ? 'admin' : 'user';
+                    ?>
                     <option value="<?= $user->getRole() ?>"><?= $user->getRole() ?></option>
-                    <option value="user">user</option>
+                    <option value="<?= $v ?>"><?= $v ?></option>
                 </select>
+
+                <label>
+                    Banned : 
+                    <input type="checkbox" name="ban" <?= $user->getBan() == 1 ? 'checked' : '' ?>>
+                </label>
+            <?php } else { ?>
+
+                <p>Banned : <?= $user->getBan() === '1' ? 'Yes' : 'No' ?></p>
 
             <?php } ?>
 
@@ -48,11 +59,13 @@ if(App\Session::getUser($id)) {
                 <i class="fa-solid fa-trash-can"></i>
             </a>
         </form>
+        <a href="index.php?ctrl=forum&action=listPostsByUser&id=<?=$user->getId()?>">Posts</a>
 
 <?php }} else { ?>
 <!-- si l'utilisateur connecté n'est ni propriétaire du compte consulté ni admin, on affiche simplement les infos du compte -->
     <p>Username : <?= $user->getUsername() ?></p>
     <p>E-Mail : <?= $user->getEmail() ?></p>
     <p>Member since : <?= $user->getRegistrationDate() ?></p>
+    <a href="index.php?ctrl=forum&action=listPostsByUser&id=<?=$user->getId()?>">Posts</a>
 
 <?php } ?>
