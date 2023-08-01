@@ -16,6 +16,19 @@ class PostManager extends Manager
         parent::connect();
     }
 
+    public function getLatestPosts()
+    {
+        $sql = "SELECT *
+                FROM post
+                ORDER BY creationDate DESC
+                LIMIT 10";
+
+        return $this->getMultipleResults(
+            DAO::select($sql),
+            $this->className
+        );
+    }
+
     public function editPost($id, $content)
     {
         $sql = "UPDATE post
