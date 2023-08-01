@@ -13,7 +13,7 @@ if($posts !== null) {
     ?>
 
         <div class="forumPost">
-            <div class="postHeader"> <!-- POST HEADER -->
+            <div class="post-header"> <!-- POST HEADER -->
                 <a href="index.php?ctrl=forum&action=userDetails&id=<?=$post->getUser()->getId()?>">
                     <?= "(Topic : " . $post->getTopic()->getTitle() . ") " . $post->getUser()->getUsername()?>
                 </a>
@@ -33,17 +33,10 @@ if($posts !== null) {
                 <?php }} ?>
             </div>
         
-            <div class="postMain"> <!-- POST MAIN -->
+            <div class="post-content"> <!-- POST MAIN -->
                 <p><?= html_entity_decode($post->getContent()) ?></p>
                 <?= $post->getModificationDate() !== null ? "<p>(Modified : " . $post->getModificationDate() . ")</p>" : ''; ?>
-            </div>
-        
-            <!-- EDIT FORM (HIDDEN PAR DEFAUT) -->
-            <form class="editForm hidden" id="editForm-<?= $post->getId() ?>" action="index.php?ctrl=security&action=editPost&id=<?=$post->getId()?>" method="POST">
-                <textarea class="post" name="post" cols="30" rows="5"><?=$post->getContent()?></textarea>
-                <input type="submit" name="submit" value="Edit post">
-            </form>
-            <!----------------------------------->    
+            </div>  
         </div>
 
     <?php
