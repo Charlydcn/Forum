@@ -1,0 +1,29 @@
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+form label {
+	display: flex;
+	flex-direction: column;
+	font-size: 20px;
+	width: 200px;
+}
+
+form input:last-of-type {
+	font-size: 20px;
+}
+
+form p {
+	font-size: 12px;
+}
+
+label input {
+	transition: 0.3s;
+}
+
+label input:focus {
+	transform: translate(5px);
+}
