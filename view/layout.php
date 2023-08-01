@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/style.css">
-    <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/<?=$css?>">
+    <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/<?=isset($css) ? $css : ""?>">
     <title>FORUM</title>
 </head>
 
@@ -22,6 +22,45 @@
             <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
             <header>
                 <nav>
+                    <!-- RESPONSIVE NAV -->
+                    <div id="responsive-nav">
+                        <div id="sidenav">
+                            <a href="#" id="closeBtn"><i class="fa-solid fa-xmark"></i></a>
+                            <ul>
+                                <li><a href="index.php?ctrl=home">Home</a></li>
+                                <?php
+                                if (App\Session::isAdmin()) {
+                                ?>
+                                    <li><a href="index.php?ctrl=forum&action=listUsers">Users</a></li>
+    
+                                <?php } ?>
+                                <li><a href="index.php?ctrl=forum&action=listCategories">Categories</a></li>
+                                <li><a href="index.php?ctrl=forum&action=listTopics">Topics</a></li>
+                            </ul>
+                        </div>
+                        <i class="fa-solid fa-bars" id="openBtn"></i>
+
+                        <a href="index.php?ctrl=home">FORUM</a>
+
+                        <div>
+                        <?php
+                            if (App\Session::getUser()) {
+                            ?>
+
+                                <a href="index.php?ctrl=forum&action=userDetails&id=<?= App\Session::getUser()->getId() ?>"><i class="fas fa-user"></i></a>
+                                <a href="index.php?ctrl=security&action=logOff&id=<?= App\Session::getUser()->getId() ?>">Log off</a>
+
+                            <?php
+                            } else {
+                            ?>
+                                <a href="index.php?ctrl=security&action=displayLogin">Log in</a>
+                                <a href="index.php?ctrl=security&action=displayRegister">Register</a>
+
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                    <!-- DESKTOP NAV -->
                     <div id="nav-left">
                         <a href="index.php?ctrl=home">Home</a>
                         <?php
@@ -35,6 +74,7 @@
                         <a href="index.php?ctrl=forum&action=listCategories">Categories</a>
                         <a href="index.php?ctrl=forum&action=listTopics">Topics</a>
                     </div>
+
                     <div id="nav-right">
 
                         <?php
@@ -53,6 +93,8 @@
                         <?php } ?>
 
                     </div>
+                    
+                    
                 </nav>
             </header>
 
@@ -62,11 +104,11 @@
         </div>
         <footer>
             <p>&copy; 2020 - Forum CDA - <a href="/home/forumRules.html">Forum's regulations</a> - <a href="">Legal notices</a></p>
-            <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
         </footer>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
     </script>
+    <script src="<?= PUBLIC_DIR ?>/js/script.js"></script>
     <script>
         $(document).ready(function() {
             $(".message").each(function() {
@@ -93,21 +135,6 @@
                 content_css: '//www.tiny.cloud/css/codepen.min.css'
             });
         })
-
-
-
-        /*
-        $("#ajaxbtn").on("click", function(){
-            $.get(
-                "index.php?action=ajax",
-                {
-                    nb : $("#nbajax").text()
-                },
-                function(result){
-                    $("#nbajax").html(result)
-                }
-            )
-        })*/
     </script>
 </body>
 
