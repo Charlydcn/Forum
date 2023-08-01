@@ -12,7 +12,7 @@ foreach ($posts as $post) {
 ?>
 
     <div class="forumPost">
-        <div class="postHeader"> <!-- POST HEADER -->
+        <div class="post-header"> <!-- POST HEADER -->
             <a href="index.php?ctrl=forum&action=userDetails&id=<?=$post->getUser()->getId()?>">
                 <?= $post->getUser()->getUsername()?>
             </a>
@@ -32,7 +32,7 @@ foreach ($posts as $post) {
             <?php }} ?>
         </div>
     
-        <div class="postMain"> <!-- POST MAIN -->
+        <div class="post-content"> <!-- POST MAIN -->
             <p><?= html_entity_decode($post->getContent()) ?></p>
             <?= $post->getModificationDate() !== null ? "<p>(Modified : " . $post->getModificationDate() . ")</p>" : ''; ?>
         </div>
