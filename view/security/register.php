@@ -1,5 +1,9 @@
+<?php
+$css = 'auth.css';
+?>
+
 <form action="index.php?ctrl=security&action=register" method="POST" autocomplete="off">
-    <h1>Join us</h1>
+    <h2>Join us</h2>
     <label>Username
         <input type="text" name="username" required>
     </label>
@@ -13,4 +17,6 @@
         <input type="password" name="pass2" required>
     </label>
     <input type="submit" name="submit" value="Register">
+
+    <p>Already registered ? <a href="index.php?ctrl=security&action=displayLogin">Log in</a></p>
 </form>
