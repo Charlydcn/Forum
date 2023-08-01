@@ -1,9 +1,11 @@
 * {
-	font-family: "Poppins", Arial, Helvetica, sans-serif;
+	font-family: Poppins;
+	margin: 0;
+	padding: 0;
 }
 
 #forum {
-	margin: 10% 2.5%;
+	padding: 10% 2.5%;
 	min-height: 100vh;
 }
 
@@ -21,153 +23,107 @@ a {
 }
 
 /* RESPONSIVE NAV */
-#responsive-nav {
+nav {
 	display: flex;
 	justify-content: space-between;
-	margin: 1rem;
-	align-items: flex-start;
+	align-items: center;
+	background: #4663a5;
+	padding: 5%;
 }
 
-#line {
-	border-bottom: 1px solid black;
+nav a {
+	color: #ffffff;
 }
 
-/* MENU BURGER OPEN BTN ANIMATION */
-#openBtn {
-	display: flex;
-	flex-direction: column;
-	gap: 0.4rem;
-	cursor: pointer;
-}
-
-#openBtn div {
-	height: 2px;
-	width: 25px;
-	background-color: black;
-}
-
-/* MENU BURGER CLOSE BTN */
-/**********************************************/
-#openBtn {
-	width: 30px;
-	height: 20px;
-	position: relative;
-	-webkit-transform: rotate(0deg);
-	-moz-transform: rotate(0deg);
-	-o-transform: rotate(0deg);
-	transform: rotate(0deg);
-	-webkit-transition: 0.5s ease-in-out;
-	-moz-transition: 0.5s ease-in-out;
-	-o-transition: 0.5s ease-in-out;
-	transition: 0.5s ease-in-out;
-	cursor: pointer;
-}
-
-#openBtn span {
-	display: block;
-	position: absolute;
-	height: 2px;
-	width: 100%;
-	background: #000000;
-	opacity: 1;
-	left: 0;
-	-webkit-transform: rotate(0deg);
-	-moz-transform: rotate(0deg);
-	-o-transform: rotate(0deg);
-	transform: rotate(0deg);
-	-webkit-transition: 0.25s ease-in-out;
-	-moz-transition: 0.25s ease-in-out;
-	-o-transition: 0.25s ease-in-out;
-	transition: 0.25s ease-in-out;
-}
-
-#openBtn span:nth-child(1) {
-	top: 0px;
-}
-
-#openBtn span:nth-child(2),
-#openBtn span:nth-child(3) {
-	top: 9px;
-}
-
-#openBtn span:nth-child(4) {
-	top: 18px;
-}
-
-#openBtn.open span:nth-child(1) {
-	top: 18px;
-	width: 0%;
-	left: 50%;
-}
-
-#openBtn.open span:nth-child(2) {
-	-webkit-transform: rotate(45deg);
-	-moz-transform: rotate(45deg);
-	-o-transform: rotate(45deg);
-	transform: rotate(45deg);
-}
-
-#openBtn.open span:nth-child(3) {
-	-webkit-transform: rotate(-45deg);
-	-moz-transform: rotate(-45deg);
-	-o-transform: rotate(-45deg);
-	transform: rotate(-45deg);
-}
-
-#openBtn.open span:nth-child(4) {
-	top: 18px;
-	width: 0%;
-	left: 50%;
-}
-/*********************************************/
-
-/* FORUM logo */
-#responsive-nav div + a {
-	font-size: 20px;
-	font-weight: bold;
-	position: absolute;
-	right: 50%;
-}
-
-/* RESPONSIVE NAV > SIDE NAV */
-#sidenav.active {
-	display: flex;
-	max-height: 1000px;
-	flex-direction: column;
-}
-
-#sidenav {
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 0.5s ease-in;
-}
-
-#sidenav ul,
-#sidenav li,
-#sidenav li a {
-	width: fit-content;
-}
-
-#sidenav ul {
-	list-style-type: none;
-	padding: 0;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-}
-
-/* RESPONSIVE LEFT NAV */
-#user-nav {
-	display: flex;
-	gap: 1rem;
-}
-
-#user-nav a {
-	font-weight: bold;
-}
-
-/* LORSQUE RESPONSIVE: */
 #nav-left,
 #nav-right {
 	display: none;
+}
+
+#openBtn {
+	cursor: pointer;
+	height: 27px;
+	width: 27px;
+	overflow: visible;
+	position: relative;
+	z-index: 2;
+}
+#openBtn span,
+#openBtn span:before,
+#openBtn span:after {
+	background: #ffffff;
+	display: block;
+	height: 4px;
+	opacity: 1;
+	position: absolute;
+	transition: 0.3s ease-in-out;
+}
+#openBtn span:before,
+#openBtn span:after {
+	content: "";
+}
+#openBtn span {
+	right: 0px;
+	top: 13px;
+	width: 27px;
+}
+#openBtn span:before {
+	left: 0px;
+	top: -10px;
+	width: 27px;
+}
+#openBtn span:after {
+	left: 0px;
+	top: 10px;
+	width: 27px;
+}
+
+#openBtn.close span {
+	transform: rotate(-45deg);
+	top: 13px;
+	width: 27px;
+}
+#openBtn.close span:before {
+	top: 0px;
+	transform: rotate(90deg);
+	width: 27px;
+}
+#openBtn.close span:after {
+	top: 0px;
+	left: 0;
+	transform: rotate(90deg);
+	opacity: 0;
+	width: 0;
+}
+
+#menu {
+	z-index: 1;
+	min-width: 100%;
+	min-height: 100%;
+	position: fixed;
+	top: 0;
+	height: 0;
+	visibility: hidden;
+	opacity: 0;
+	text-align: center;
+	transition: all 0.3s ease-in-out;
+	padding: 0;
+}
+
+#menu.overlay {
+	visibility: visible;
+	opacity: 1;
+	padding-top: 100px;
+	background: rgba(0, 0, 0, 0.78);
+}
+
+#menu li {
+	list-style: none;
+}
+#menu a {
+	color: white;
+	display: block;
+	font-size: 32px;
+	margin-bottom: 30px;
+	text-decoration: none;
 }
