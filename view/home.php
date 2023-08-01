@@ -8,30 +8,39 @@ $css = 'posts.css';
 <h3>Latest posts :</h3>
 
 <?php
-foreach ($posts as $post) {
-    $topic = $post->getTopic();
-?>
+if($posts !== null) {
+    foreach ($posts as $post) {
+        $topic = $post->getTopic();
+        $user = $post->getUser();
+    ?>
+    
+    <div class="forumPost">
+                <!-- POST HEADER -->
+                <div class="post-header">
 
-<div class="forumPost">
-            <div class="post-header"> <!-- POST HEADER -->
-                <a href="index.php?ctrl=forum&action=userDetails&id=<?=$post->getUser()->getId()?>">
-                    <?= "(Topic : " . $post->getTopic()->getTitle() . ") " . $post->getUser()->getUsername()?>
-                </a>
-        
-                <?= $post->getCreationDate() ?>
-                
-                <?php
-                if(App\Session::getUser() && App\Session::getUser()->getBan() == 0) {
-                    if($post->getUser()->getId() === $_SESSION['user']->getId() || App\Session::isAdmin()) {        
-                ?>
-                
-                <?php }} ?>
+                    <!-- topic -->
+                    <a href="index.php?ctrl=forum&action=postsByTopic&id=<?=$topic->getId()?>">
+                        <?= "<span>" . $topic->getTitle() . "</span>" ?>
+                    </a>
+                    <br>
+
+                    <!-- username -->
+                    <a href="index.php?ctrl=forum&action=userDetails&id=<?=$user->getId()?>">
+                        <?= $user->getUsername() ?>
+                    </a>
+
+            
+                    <!-- creation date -->
+                    <?= $post->getCreationDate() ?>
+                </div>
+            
+                <!-- POST MAIN -->
+                <div class="post-content">
+                    <!-- content -->
+                    <p><?= html_entity_decode($post->getContent()) ?></p>
+                    <!-- modification date -->
+                    <?= $post->getModificationDate() !== null ? "<p>(Modified : " . $post->getModificationDate() . ")</p>" : ''; ?>
+                </div>  
             </div>
-        
-            <div class="post-content"> <!-- POST MAIN -->
-                <p><?= html_entity_decode($post->getContent()) ?></p>
-                <?= $post->getModificationDate() !== null ? "<p>(Modified : " . $post->getModificationDate() . ")</p>" : ''; ?>
-            </div>  
-        </div>
-
-<?php } ?>
+    
+    <?php }} ?>
