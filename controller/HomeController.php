@@ -12,11 +12,17 @@
     class HomeController extends AbstractController implements ControllerInterface{
 
         public function index(){
-            
+
+            $postManager = new PostManager();
+            $posts = $postManager->getLatestPosts();
+
             return [
-                    "view" => VIEW_DIR."home.php"
-                ];
-            }
+                "view" => VIEW_DIR . "home.php",
+                "data" => [
+                    "posts" => $posts
+                ]
+            ];
+        }
             
         
    
