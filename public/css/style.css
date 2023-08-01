@@ -22,6 +22,93 @@ a {
   border-bottom: 1px solid black;
 }
 
+/* MENU BURGER OPEN BTN ANIMATION */
+#openBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+#openBtn div {
+  height: 2px;
+  width: 25px;
+  background-color: black;
+}
+
+/* MENU BURGER CLOSE BTN */
+#openBtn {
+  width: 30px;
+  height: 20px;
+  position: relative;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+#openBtn span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: #000000;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.25s ease-in-out;
+  -moz-transition: 0.25s ease-in-out;
+  -o-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
+}
+
+#openBtn span:nth-child(1) {
+  top: 0px;
+}
+
+#openBtn span:nth-child(2),
+#openBtn span:nth-child(3) {
+  top: 9px;
+}
+
+#openBtn span:nth-child(4) {
+  top: 18px;
+}
+
+#openBtn.open span:nth-child(1) {
+  top: 18px;
+  width: 0%;
+  left: 50%;
+}
+
+#openBtn.open span:nth-child(2) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+#openBtn.open span:nth-child(3) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+#openBtn.open span:nth-child(4) {
+  top: 18px;
+  width: 0%;
+  left: 50%;
+}
+
 /* FORUM logo */
 #sidenav ~ a {
   font-size: 20px;
@@ -34,10 +121,6 @@ a {
 #sidenav.active {
   display: flex;
   flex-direction: column;
-}
-
-#openBtn.hidden {
-  display: none;
 }
 
 #sidenav {
@@ -59,12 +142,12 @@ a {
 }
 
 /* RESPONSIVE LEFT NAV */
-#responsive-nav div:last-of-type {
+#user-nav {
   display: flex;
   gap: 1rem;
 }
 
-#responsive-nav div:last-of-type a {
+#user-nav a {
   font-weight: bold;
 }
 
