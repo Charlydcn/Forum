@@ -1,35 +1,35 @@
 .fa-trash-can {
-    position:relative;
+  position: relative;
 }
 
 .fa-pencil {
-    position:absolute;
-    cursor: pointer;
+  position: absolute;
+  cursor: pointer;
 }
 
 .hidden {
-    display:none;
+  display: none;
 }
 
 .visible {
-    display:initial;
+  display: initial;
 }
 
-.postHeader {
-    font-size: 12px;
+.post-header {
+  font-size: 12px;
 }
 
-.postHeader a:first-of-type {
-    font-size: 16px;
-    font-weight: bold;
+.post-header a:first-of-type {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .forumPost {
-    border: 1px solid #c1c1c1;
-    padding: 15px;
-    border-radius: 5px;
+  border: 1px solid #c1c1c1;
+  padding: 15px;
+  border-radius: 5px;
 }
 
-.postMain p:last-of-type {
-    font-size: 11px;
+.post-content p:last-of-type {
+  font-size: 11px;
 }
