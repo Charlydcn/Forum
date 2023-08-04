@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/style.css">
-    <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/<?= $css === null ? "" : $css?>">
+    <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/<?= isset($css) && $css ? $css : ""?>">
+    <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/<?= isset($css2) && $css2 ? $css2 : ""?>">
     <title>FORUM</title>
 </head>
 
@@ -25,8 +26,6 @@
                     <div id="openBtn">
                         <span></span>
                     </div>
-
-                    <a href="index.php?ctrl=home">FORUM</a>
 
                     <!-- user login/register/details -->
                     <div id="user-nav">
@@ -81,7 +80,8 @@
                     </div>
                     
                 </nav>
-                <div id="menu">
+                <div id="nav-menu">
+                    <h1>FORUM</h1>
                     <ul>
                         <li><a href="index.php?ctrl=home">Home</a></li>
                         <?php
@@ -97,16 +97,20 @@
             </header>
 
             <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
-            <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
-            <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
+            <h3 class="message errorMsg"><?= App\Session::getFlash("error") ?></h3>
+            <h3 class="message successMsg"><?= App\Session::getFlash("success") ?></h3>
 
             <main id="forum">
                 <?= $page ?>
             </main>
         </div>
-        
         <footer>
-            <p>&copy; 2020 - Forum CDA - <a href="/home/forumRules.html">Forum's regulations</a> - <a href="">Legal notices</a></p>
+            <div>
+                <a href="#">Forum CDA</a> -
+                <a href="#">Forum's regulations</a> -
+                <a href="#">Legal notices</a>
+            </div>
+            <p>2020 © Forum</p>
         </footer>
     </div>
 
