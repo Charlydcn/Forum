@@ -1,26 +1,37 @@
 <?php
 
 $topics = $result["data"]['topics'];
-
 $css = 'topicsList.css';
 
 ?>
 
 <h1>Topics</h1>
 
-<ul>
+<table>
+    <thead>
+        <tr>
+            <th>Topic</th>
+            <th>Posts</th>
+            <th>Last Activity</th>
+        </tr>
+    </thead>
+    <tbody>
     <?php
     if ($topics !== null) {
 
         foreach ($topics as $topic) {
 
     ?>
-            <li>
-                <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>">
-                    <?= $topic->getTitle()?>
-                </a>
-                <span>(<?=$topic->getNbPosts()?> post(s), last activity : <?=$topic->getLastActivity()?>)</span>
-            </li>
+            <tr>
+                <td>
+                    <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>">
+                        <?= $topic->getTitle()?>
+                    </a>
+                </td>
+
+                <td><?=$topic->getNbPosts()?></td>
+                <td><?=$topic->getLastActivity()?></td>
+            </tr>
 
         <?php
         }
@@ -29,7 +40,8 @@ $css = 'topicsList.css';
         <h3>Nothing here.. (yet)</h3>
     <?php } ?>
 
-</ul>
+    </tbody>
+</table>
 
 <?php
 
