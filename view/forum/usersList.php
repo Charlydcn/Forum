@@ -13,37 +13,41 @@ if ($users !== null) {
 
 ?>
 
-<table>
-    <thead>
-        <tr>
-            <th>Topic</th>
-            <th>Posts</th>
-            <th>Last Activity</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php
-    if ($users !== null) {
-        foreach ($users as $user) {
-            
-    ?>
-            <tr>
-                <td>
-                    <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>">
-                        <?= $topic->getTitle()?>
-                    </a>
-                </td>
+    <table>
+        <thead>
+            <th>Username</th>
+            <th>E-Mail</th>
+            <th>Role</th>
+            <th>Registration date</th>
+        </thead>
+        <tbody>
 
-                <td><?=$topic->getNbPosts()?></td>
-                <td><?=$topic->getLastActivity()?></td>
-            </tr>
+            <?php
+            foreach ($users as $user) {
+            ?>
 
-        <?php
-        }
-    } else {
-        ?>
-        <h3>Nothing here.. (yet)</h3>
-    <?php }} ?>
+                <tr>
+                    <td>
+                        <a href="index.php?ctrl=forum&action=userDetails&id=<?= $user->getId() ?>"><?= $user->getUsername() ?></a>
+                    </td>
+                    <td>
+                        <?= $user->getEmail() ?>
+                    </td>
+                    <td>
+                        <?= $user->getRole() ?>
+                    </td>
+                    <td>
+                        <?= $user->getRegistrationDate() ?>
+                    </td>
+                </tr>
 
-    </tbody>
-</table>
+            <?php
+            }
+        } else {
+            ?>
+            <h3>Nothing here.. (yet)</h3>
+
+        <?php } ?>
+
+        </tbody>
+    </table>
