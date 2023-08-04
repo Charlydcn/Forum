@@ -2,7 +2,8 @@
 
 $user = $result['data']['user'];
 
-$css = 'userDetails.css';
+$css = 'auth.css';
+$css2 = 'userDetails.css';
 
 // on vérifie qu'il y a un utilisateur en session
 if(App\Session::getUser($id)) {
@@ -32,28 +33,30 @@ if(App\Session::getUser($id)) {
                 <input type="password" name="pass2" value="">
             </label>
 
-                <?php
-                if(App\Session::isAdmin()) {
-                ?>
+                <div>
+                    <?php
+                    if(App\Session::isAdmin()) {
+                    ?>
     
-                    <select name="role">
-                        <?php
-                        // si l'utilisateur connecté est un admin, alors la deuxième <option> sera user, et inversement
-                        $v = $user->getRole() == 'user' ? 'admin' : 'user';
-                        ?>
-                        <option value="<?= $user->getRole() ?>"><?= $user->getRole() ?></option>
-                        <option value="<?= $v ?>"><?= $v ?></option>
-                    </select>
-    
-                    <label>
-                        Banned : 
-                        <input type="checkbox" name="ban" <?= $user->getBan() == 1 ? 'checked' : '' ?>>
-                    </label>
-                <?php } else { ?>
-    
-                    <p>Banned : <?= $user->getBan() === '1' ? 'Yes' : 'No' ?></p>
-    
-                <?php } ?>
+                        <select name="role">
+                            <?php
+                            // si l'utilisateur connecté est un admin, alors la deuxième <option> sera user, et inversement
+                            $v = $user->getRole() == 'user' ? 'admin' : 'user';
+                            ?>
+                            <option value="<?= $user->getRole() ?>"><?= $user->getRole() ?></option>
+                            <option value="<?= $v ?>"><?= $v ?></option>
+                        </select>
+        
+                        <label>
+                            Banned : 
+                            <input type="checkbox" name="ban" <?= $user->getBan() == 1 ? 'checked' : '' ?>>
+                        </label>
+                    <?php } else { ?>
+        
+                        <p>Banned : <?= $user->getBan() === '1' ? 'Yes' : 'No' ?></p>
+        
+                    <?php } ?>
+                </div>
 
             
             <input type="submit" name="submit" value="Save changes">
@@ -61,17 +64,29 @@ if(App\Session::getUser($id)) {
             <a href="index.php?ctrl=security&action=deleteUser&id=<?= $user->getId() ?>" class="delete-btn">
                 <i class="fa-solid fa-trash-can"></i>
             </a>
+
+            <p>Member since : <?= $user->getRegistrationDate() ?></p>
         </form>
 
-        <p>Member since : <?= $user->getRegistrationDate() ?></p>
+        <a href="index.php?ctrl=forum&action=listPostsByUser&id=<?=$user->getId()?>">Posts</a>
 
-        <a href="index.php?ctrl=forum&action=listPostsByUser&id=<?=$user->getId()?>">User's Posts</a>
-
-<?php }} else { ?>
+<?php } else { ?>
 <!-- si l'utilisateur connecté n'est ni propriétaire du compte consulté ni admin, on affiche simplement les infos du compte -->
-    <p>Username : <?= $user->getUsername() ?></p>
-    <p>E-Mail : <?= $user->getEmail() ?></p>
-    <p>Member since : <?= $user->getRegistrationDate() ?></p>
-    <a href="index.php?ctrl=forum&action=listPostsByUser&id=<?=$user->getId()?>">Posts</a>
+<div id="simple-details">
+    <div>
+        <p>Username : </p>
+        <p><?= $user->getUsername() ?></p>
+    </div>
+    <div>
+        <p>E-Mail : </p>
+        <p><?= $user->getEmail() ?></p>
+    </div>
+    <div>
+        <p>Member since : </p>
+        <p><?= $user->getRegistrationDate() ?></p>
+    </div>
 
-<?php } ?>
+    <a href="index.php?ctrl=forum&action=listPostsByUser&id=<?=$user->getId()?>">Posts</a>
+</div>    
+
+<?php }} ?>
