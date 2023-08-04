@@ -10,7 +10,7 @@ $css = 'auth.css';
     <label>E-Mail
         <input type="email" name="email" required>
     </label>
-    <label>Password (8-25 characters)
+    <label>Password <span>(8-25 characters)</span>
         <input type="password" name="pass1" required>
     </label>
     <label>Confirm password
