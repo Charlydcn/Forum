@@ -21,12 +21,14 @@ form p {
 	font-size: 16px;
 }
 
-form div + input:last-of-type {
+form div + input:last-of-type,
+label:last-of-type + input {
 	padding:5px;
 }
 
 label input {
 	transition: 0.3s;
+	padding: 5px 10px;
 }
 
 label input:focus {
