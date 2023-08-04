@@ -1,20 +1,42 @@
 * {
 	font-family: Poppins;
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 }
 
 #forum {
-	padding: 10% 2.5%;
+	padding: 10% 5%;
 	min-height: 100vh;
 }
 
 footer {
-	background-color: rgb(36, 34, 34);
-	color: white;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	background-color: #4663a5;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.errorMsg,
+.successMsg {
+	font-size: 18px;
+	width: 250px;
+    text-align: center;
+    margin: 1rem;
+    position: sticky;
+    top: 20px;
+}
+
+.errorMsg {
+	color: rgb(255 255 255);
+    background-color: rgb(233 56 56);
+}
+
+.successMsg {
+	color: #0d550d;
+    background-color: #c7e3c7;
+	
 }
 
 a {
@@ -96,7 +118,16 @@ nav a {
 	width: 0;
 }
 
-#menu {
+#user-nav {
+	display: inline-flex;
+    gap: 1rem;
+}
+
+#user-nav a {
+	font-size:18px;
+}
+
+#nav-menu {
 	z-index: 1;
 	min-width: 100%;
 	min-height: 100%;
@@ -110,17 +141,23 @@ nav a {
 	padding: 0;
 }
 
-#menu.overlay {
+#nav-menu.overlay {
 	visibility: visible;
 	opacity: 1;
 	padding-top: 100px;
 	background: rgba(0, 0, 0, 0.78);
 }
 
-#menu li {
+#nav-menu h1 {
+	color: white;
+    font-size: 56px;
+    margin-bottom: 15%;
+}
+
+#nav-menu li {
 	list-style: none;
 }
-#menu a {
+#nav-menu a {
 	color: white;
 	display: block;
 	font-size: 32px;
