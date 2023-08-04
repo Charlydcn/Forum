@@ -1,3 +1,43 @@
-li span {
+h1 {
+    text-align: center;
+}
+
+thead {
+    background-color: #4663a5;
+    color: #fff;
+    font-size: 14px;
+}
+
+tbody {
+    background-color: #5b73ab17;
+}
+
+tbody td {
+    font-size: 16px;
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid rgb(200, 200, 200);
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    margin:1rem auto;
+}
+
+td,
+th {
+    border: 1px solid rgb(190, 190, 190);
+    padding: 5px 10px;
+}
+
+td {
+    text-align: center;
+}
+
+td a {
+    font-weight: bold;
+}
+
+tbody td:last-of-type {
     font-size: 12px;
 }
