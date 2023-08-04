@@ -1,29 +1,52 @@
-form {
-	display: flex;
-	width: 50%;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 0.5rem;
-}
-
-form label {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-}
-
 form input[type="checkbox"] {
-	width: 25px;
-	height: 25px;
+	width:20px
 }
 
 form label:nth-of-type(5) {
 	flex-direction: row;
-	align-items: center;
-	gap: 0.5rem;
+	gap:10px;
 }
 
-form + p {
-    
+.fa-trash-can {
+	color:#d70a0a;
+	font-size: 26px;
+}
+
+form select {
+	font-size: 18px;
+}
+
+form div {
+	display: flex;
+	align-items: center;
+	gap:1rem;
+}
+
+form div label {
+	width:auto;
+	flex-direction: row;
+}
+
+form + a:first-of-type,
+#simple-details a:first-of-type {
+	background-color:#4663a5;
+    padding: 10px 25px;
+    color: white;
+    border-radius: 5px;
+}
+
+#simple-details {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+	gap:1rem;
+}
+
+#simple-details p {
+	font-size: 18px;
+}
+
+#simple-details p:nth-child(odd) {
+	font-weight: bold;
 }
