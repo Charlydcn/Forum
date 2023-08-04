@@ -1,5 +1,6 @@
 form input[type="checkbox"] {
-	width:20px
+	width:20px;
+	margin-left: 5px;
 }
 
 form label:nth-of-type(5) {
