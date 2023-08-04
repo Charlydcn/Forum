@@ -37,7 +37,7 @@ $css = 'posts.css';
                     <!-- POST MAIN -->
                     <div class="post-content">
                         <!-- content -->
-                        <p><?= html_entity_decode($post->getContent()) ?></p>
+                        <?= html_entity_decode($post->getContent()) ?>
                         <!-- modification date -->
                         <?= $post->getModificationDate() !== null ? "<p>(Modified : " . $post->getModificationDate() . ")</p>" : ''; ?>
                     </div>  
