@@ -1,6 +1,7 @@
 <?php
 
 $categories = $result["data"]['categories'];
+$css = 'list.css';
 
 ?>
 
