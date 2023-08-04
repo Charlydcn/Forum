@@ -9,14 +9,18 @@ $css = 'posts.css';
 
 <?php
 foreach ($posts as $post) {
+    $user = $post->getUser()
 ?>
 
     <div class="forumPost">
-        <div class="post-header"> <!-- POST HEADER -->
+        <!-- POST HEADER -->
+        <div class="post-header">
+            <!-- username -->
             <a href="index.php?ctrl=forum&action=userDetails&id=<?=$post->getUser()->getId()?>">
                 <?= $post->getUser()->getUsername()?>
             </a>
     
+            <!-- creationDate -->
             <?= $post->getCreationDate() ?>
             
             <?php
@@ -24,6 +28,7 @@ foreach ($posts as $post) {
                 if($post->getUser()->getId() === $_SESSION['user']->getId() || App\Session::isAdmin()) {        
             ?>
     
+            <!-- delete/edit btns -->
             <a href="index.php?ctrl=security&action=deletePost&id=<?=$post->getId()?>" class="delete-btn">
                 <i class="fa-solid fa-trash-can"></i>
             </a>
@@ -31,9 +36,12 @@ foreach ($posts as $post) {
             
             <?php }} ?>
         </div>
-    
-        <div class="post-content"> <!-- POST MAIN -->
-            <p><?= html_entity_decode($post->getContent()) ?></p>
+
+        <!-- POST MAIN -->
+        <div class="post-content"> 
+            <!-- content -->
+            <?= html_entity_decode($post->getContent()) ?>
+            <!-- modification date -->          
             <?= $post->getModificationDate() !== null ? "<p>(Modified : " . $post->getModificationDate() . ")</p>" : ''; ?>
         </div>
     
@@ -50,6 +58,7 @@ foreach ($posts as $post) {
 if(App\Session::getUser() && App\Session::getUser()->getBan() == 0) {
 ?>
 
+<!-- CREATE NEW POST FORM -->
 <form action="index.php?ctrl=security&action=createPost&id=<?=$post->getTopic()->getId()?>" method="POST">
 
     <textarea class="post" name="newPost"></textarea>
