@@ -1,3 +1,8 @@
+h2 {
+	font-size: 30px;
+	text-align: center;
+}
+
 form {
 	display: flex;
 	flex-direction: column;
@@ -12,13 +17,18 @@ form {
 form label {
 	display: flex;
 	flex-direction: column;
-	font-size: 18px;
+	font-size: 20px;
 	width: 200px;
 }
 
 form input,
 form p {
-	font-size: 16px;
+	font-size: 18px;
+}
+
+form p a {
+	color:rgb(32, 49, 119);
+	font-weight: bold;
 }
 
 form div + input:last-of-type,
