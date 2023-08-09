@@ -22,7 +22,6 @@ table {
     letter-spacing: 1px;
     font-family: sans-serif;
     margin:1rem auto;
-    width:80%;
 }
 
 td,
@@ -41,4 +40,16 @@ td a {
 
 tbody td:last-of-type {
     font-size: 12px;
+}
+
+@media screen and (max-width:768px) {
+
+    tbody td {
+        font-size: 18px;
+    }
+
+    tbody td:last-of-type {
+        font-size: 14px;
+    }
+
 }
