@@ -27,6 +27,8 @@
                         <span></span>
                     </div>
 
+                    <a href="index.php?ctrl=home">FORUM</a>
+
                     <!-- user login/register/details -->
                     <div id="user-nav">
                     <?php
@@ -39,25 +41,25 @@
                         <?php
                         } else {
                         ?>
-                            <a href="index.php?ctrl=security&action=displayLogin">Log in</a>
-                            <a href="index.php?ctrl=security&action=displayRegister">Register</a>
+                            <a href="index.php?ctrl=security&action=displayLogin"><i class="fas fa-user"></i></a>
 
                         <?php } ?>
                     </div>
+                    <!-- ******************************** -->
 
                     <!-- DESKTOP NAV -->
                     <div id="nav-left">
-                        <a href="index.php?ctrl=home">Home</a>
+                        <a class="hover-underline-animation" href="index.php?ctrl=home">Home</a>
                         <?php
                         if (App\Session::isAdmin()) {
                         ?>
-                            <a href="index.php?ctrl=forum&action=listUsers">Users</a>
+                            <a class="hover-underline-animation"  href="index.php?ctrl=forum&action=listUsers">Users</a>
 
                         <?php
                         }
                         ?>
-                        <a href="index.php?ctrl=forum&action=listCategories">Categories</a>
-                        <a href="index.php?ctrl=forum&action=listTopics">Topics</a>
+                        <a class="hover-underline-animation"  href="index.php?ctrl=forum&action=listCategories">Categories</a>
+                        <a class="hover-underline-animation"  href="index.php?ctrl=forum&action=listTopics">Topics</a>
                     </div>
 
                     <div id="nav-right">
@@ -66,14 +68,14 @@
                         if (App\Session::getUser()) {
                         ?>
 
-                            <a href="index.php?ctrl=forum&action=userDetails&id=<?= App\Session::getUser()->getId() ?>"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getUsername() ?></a>
-                            <a href="index.php?ctrl=security&action=logOff&id=<?= App\Session::getUser()->getId() ?>">Log off</a>
+                            <a class="hover-underline-animation"  href="index.php?ctrl=forum&action=userDetails&id=<?= App\Session::getUser()->getId() ?>"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getUsername() ?></a>
+                            <a class="hover-underline-animation"  href="index.php?ctrl=security&action=logOff&id=<?= App\Session::getUser()->getId() ?>">Log off</a>
 
                         <?php
                         } else {
                         ?>
-                            <a href="index.php?ctrl=security&action=displayLogin">Log in</a>
-                            <a href="index.php?ctrl=security&action=displayRegister">Register</a>
+                            <a class="hover-underline-animation"  href="index.php?ctrl=security&action=displayLogin">Log in</a>
+                            <a class="hover-underline-animation"  href="index.php?ctrl=security&action=displayRegister">Register</a>
 
                         <?php } ?>
 
