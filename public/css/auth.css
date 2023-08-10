@@ -1,50 +1,93 @@
-h2 {
-	font-size: 30px;
-	text-align: center;
-}
-
 form {
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 1rem;
-	border: 1px solid #8080802e;
-    border-radius: 15px;
-    padding: 1.5rem;
-	margin: 1rem 0px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+    margin: auto;
+	width: -moz-fit-content;
+    width: fit-content;
 }
 
-form label {
+form h2,
+form div + input {
+	margin:auto;
+}
+
+form div {
 	display: flex;
-	flex-direction: column;
-	font-size: 20px;
-	width: 200px;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
 }
 
-form input,
-form p {
-	font-size: 18px;
+form div + input {
+	width:50%;
+	width: 50%;
+    padding: 5px 10px;
+    background: #4663a5;
+    border: 1px solid white;
+    color: white;
+    border-radius: 3px;
+	cursor:pointer;
+	transition:.3s;
 }
 
-form p a {
-	color:rgb(32, 49, 119);
-	font-weight: bold;
-}
-
-form div + input:last-of-type,
-label:last-of-type + input {
-	padding:5px;
+form div + input:hover {
+    background: #627fc2;
 }
 
 label input {
-	transition: 0.3s;
-	padding: 5px 10px;
+	padding: 2.5px 5px;
+	transition:.3s;
 }
 
+form p:last-child {
+	margin:auto;
+}
+
+form p:last-child a {
+	color:#2a395c;
+	font-weight: bold;
+}
+
+	
 label input:focus {
 	transform: translate(5px);
+	outline: none;
 }
 
-label:nth-of-type(3) span {
-	font-size: 14px;
+@media screen and (max-width:768px) {
+	h2 {
+		font-size: 30px;
+		text-align: center;
+	}
+	
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		border: 1px solid #8080802e;
+		border-radius: 15px;
+		padding: 1.5rem;
+		margin: 1rem 0;
+	}
+	
+	form label {
+		display: flex;
+		flex-direction: column;
+		font-size: 20px;
+		width: 200px;
+	}
+	
+	form input,
+	form p {
+		font-size: 18px;
+	}
+	
+	form div + input:last-of-type,
+	label:last-of-type + input {
+		padding:5px;
+	}
 }
+
