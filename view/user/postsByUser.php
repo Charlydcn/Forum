@@ -19,7 +19,7 @@ $css = 'posts.css';
                     <div class="post-header">
 
                         <!-- topic -->
-                        <a href="index.php?ctrl=forum&action=postsByTopic&id=<?=$topic->getId()?>">
+                        <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?=$topic->getId()?>">
                             <?= "<span>" . $topic->getTitle() . "</span>" ?>
                         </a>
                         <br>
