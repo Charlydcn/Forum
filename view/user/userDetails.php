@@ -89,4 +89,12 @@ if(App\Session::getUser($id)) {
     <a href="index.php?ctrl=forum&action=listPostsByUser&id=<?=$user->getId()?>">Posts</a>
 </div>    
 
-<?php }} ?>
+<?php
+// si il n'y a aucun utilisateur connecté
+}} else {
+?>
+
+<h2>Please sign-in to see any user details</h2>
+
+
+<?php } ?>
