@@ -315,22 +315,34 @@ class SecurityController extends AbstractController implements ControllerInterfa
         if(isset($_POST['submit'])) {
             $categoryName = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+            // on instancie un objet de classe CategoryManager pour utiliser ses méthodes dans les vérifications
+            $categoryManager = new CategoryManager();
+
             // vérification de la catégorie (si il n'est pas vide avec que des espaces)
             // supprime les espaces spéciaux et les espaces vides de la catégorie
             $trimmedCateg = preg_replace('/(&nbsp;|\s)+/', '', $categoryName);
             //  supprime toutes les balises HTML
             $strippedCateg = strip_tags(html_entity_decode($trimmedCateg));
             // si après trim et strip il ne reste plus rien, on ne créer pas la catégorie
+
+            // vérification que le nom de catégorie n'existe pas déjà en bdd
+            $categoryExists = $categoryManager->findOneBy("name", $categoryName);
             
             if (empty($strippedCateg)) {
                 Session::addFlash("error", "Please enter valid text in your category");
                 $this->redirectTo("security", "categoryDashboard", $id);
             } else {
+                // si la catégorie de l'utilisateur passe les filtres et qu'elle n'excède pas 20 caractères
                 if ($categoryName && strlen($categoryName) <= 20) {
-                    $category = new CategoryManager();
-                    $category->editCategory($id, $categoryName);
-                    Session::addFlash("success", "Category succesfully modified");
-                    $this->redirectTo("security", "categoryDashboard&id=$id");
+                    // si la catégorie n'existe pas déjà en bdd (le name)
+                    if (!$categoryExists) {
+                        $categoryManager->editCategory($id, $categoryName);
+                        Session::addFlash("success", "Category succesfully modified");
+                        $this->redirectTo("security", "categoryDashboard&id=$id");
+                    } else {
+                        Session::addFlash("error", "Category name already used");
+                        $this->redirectTo("security", "categoryDashboard", $id);        
+                    }
                 } else {
                     Session::addFlash("error", "Incorrect category name");
                     $this->redirectTo("security", "categoryDashboard&id=$id");
@@ -357,22 +369,34 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
             $categoryName = filter_input(INPUT_POST, 'newCategory', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
+            // on instancie un objet de classe CategoryManager pour utiliser ses méthodes dans les vérifications
+            $categoryManager = new CategoryManager();
+
             // vérification de la catégorie (si il n'est pas vide avec que des espaces)
             // supprime les espaces spéciaux et les espaces vides de la catégorie
             $trimmedCateg = preg_replace('/(&nbsp;|\s)+/', '', $categoryName);
             //  supprime toutes les balises HTML
             $strippedCateg = strip_tags(html_entity_decode($trimmedCateg));
-            // si après trim et strip il ne reste plus rien, on ne créer pas la catégorie
 
+            // vérification que le nom de catégorie n'existe pas déjà en bdd
+            $categoryExists = $categoryManager->findOneBy("name", $categoryName);
+
+            // si après trim et strip il ne reste plus rien, on ne créer pas la catégorie
             if (empty($strippedCateg)) {
                 Session::addFlash("error", "Please enter valid text in your category");
                 $this->redirectTo("security", "categoriesDashboard");
             } else {
+                // si la catégorie de l'utilisateur passe les filtres et qu'elle n'excède pas 20 caractères
                 if($categoryName && strlen($categoryName) <= 20) {
-                    $category = new CategoryManager();
-                    $category->createCategory($categoryName);
-                    Session::addFlash("success", "Category succesfully created");
-                    $this->redirectTo("security", "categoriesDashboard");
+                    // si la catégorie n'existe pas déjà en bdd (le name)
+                    if(!$categoryExists) {
+                        $categoryManager->createCategory($categoryName);
+                        Session::addFlash("success", "Category succesfully created");
+                        $this->redirectTo("security", "categoriesDashboard");
+                    } else {
+                        Session::addFlash("error", "Category name already used");
+                        $this->redirectTo("security", "categoriesDashboard");         
+                    }
                 } else {
                     Session::addFlash("error", "Incorrect category name");
                     $this->redirectTo("security", "categoriesDashboard");
@@ -509,6 +533,9 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
             $topicTitle = filter_input(INPUT_POST, 'topicTitle', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
+            // on instancie un objet de classe TopicManager pour utiliser ses méthodes dans les vérifications
+            $topicManager = new TopicManager();
+
             // vérification du topic (si il n'est pas vide avec que des espaces)
             // supprime les espaces spéciaux et les espaces vides du message
             $trimmedTopicTitle = preg_replace('/(&nbsp;|\s)+/', '', $topicTitle);
@@ -516,13 +543,22 @@ class SecurityController extends AbstractController implements ControllerInterfa
             //  supprime toutes les balises HTML
             $strimmedTopicTitle = strip_tags(html_entity_decode($trimmedTopicTitle));
 
-            // si après trim et strip il ne reste plus rien, on ne créer pas le post
+            // on vérifie si le topic de l'utilisateur n'existe pas déjà en bdd (par le title)
+            $topicExists = $topicManager->findOneBy("title", $topicTitle);
+
+            // si après trim et strip il ne reste plus rien, on ne créer pas le topic
             if (!empty($strimmedTopicTitle)) {
+                // si le topic passe les filtres et n'excède pas 20 caractères,
                 if ($topicTitle && strlen($topicTitle) <= 20) {
-                    $topic = new TopicManager();
-                    $topic->editTopic($id, $topicTitle);
-                    Session::addFlash("success", "Topic succesfully modified");
-                    $this->redirectTo("security", "topicDashboard&id=$id");
+                    // si le topic n'existe pas déjà en bdd (par le title)
+                    if (!$topicExists) {
+                        $topicManager->editTopic($id, $topicTitle);
+                        Session::addFlash("success", "Topic succesfully modified");
+                        $this->redirectTo("security", "topicDashboard&id=$id");
+                    } else {
+                        Session::addFlash("error", "Topic name already used");
+                        $this->redirectTo("security", "topicDashboard&id=$id");    
+                    }
                 } else {
                     Session::addFlash("error", "Incorrect topic name");
                     $this->redirectTo("security", "topicDashboard&id=$id");
@@ -551,21 +587,32 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
             $topicTitle = filter_input(INPUT_POST, 'topicTitle', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
+            // on instancie un objet de classe TopicManager pour utiliser ses méthodes dans les vérifications
+            $topicManager = new TopicManager();
+
             // vérification du topic (si il n'est pas vide avec que des espaces)
             // supprime les espaces spéciaux et les espaces vides du message
             $trimmedTopicTitle = preg_replace('/(&nbsp;|\s)+/', '', $topicTitle);
 
             //  supprime toutes les balises HTML
             $strimmedTopicTitle = strip_tags(html_entity_decode($trimmedTopicTitle));
-            
-            var_dump($strimmedTopicTitle);die;
+
+            // on vérifie si le topic de l'utilisateur n'existe pas déjà en bdd (par le title)
+            $topicExists = $topicManager->findOneBy("title", $topicTitle);
+
             // si après trim et strip il ne reste plus rien, on ne créer pas le post
             if (!empty($strimmedTopicTitle)) {
-                if($topicTitle && strlen($topicTitle) <= 20) {
-                    $topic = new TopicManager();
-                    $topic->createTopic($topicTitle);
-                    Session::addFlash("success", "Topic succesfully created");
-                    $this->redirectTo("security", "topicsDashboard");
+                // si le topic passe les filtres et n'excède pas 20 caractères
+                if ($topicTitle && strlen($topicTitle) <= 20) {
+                    // si le topic n'existe pas déjà en bdd (par le title)
+                    if (!$topicExists) {
+                        $topicManager->createTopic($topicTitle);
+                        Session::addFlash("success", "Topic succesfully created");
+                        $this->redirectTo("security", "topicsDashboard");
+                    } else {
+                        Session::addFlash("error", "Topic name already used");
+                        $this->redirectTo("security", "topicsDashboard");
+                    }
                 } else {
                     Session::addFlash("error", "Incorrect topic name");
                     $this->redirectTo("security", "topicsDashboard");
