@@ -1,3 +1,7 @@
+form {
+	margin: 2rem 0;
+}
+
 form input[type="checkbox"] {
 	width:20px;
 	margin-left: 5px;
@@ -11,19 +15,20 @@ form label:nth-of-type(5) {
 .fa-trash-can {
 	color:#d70a0a;
 	font-size: 26px;
+	transition: .3s;
 }
 
-form select {
-	font-size: 18px;
+.fa-trash-can:hover {
+	color:#771a1a;
 }
 
-form div {
+form div:first-of-type {
 	display: flex;
-	align-items: center;
+	align-items: flex-end;
 	gap:1rem;
 }
 
-form div label {
+form div:first-of-type label {
 	width:auto;
 	flex-direction: row;
 }
@@ -50,4 +55,10 @@ form + a:first-of-type,
 
 #simple-details p:nth-child(odd) {
 	font-weight: bold;
+}
+
+@media screen and (max-width:768px) {
+	form select {
+		font-size: 18px;
+	}
 }

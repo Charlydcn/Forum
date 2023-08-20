@@ -3,7 +3,7 @@
 $user = $result['data']['user'];
 
 $css = 'auth.css';
-$css2 = 'userDetails.css';
+$css2 = 'topicsList.css';
 
 // on vérifie qu'il y a un utilisateur en session
 if(App\Session::getUser($id)) {
@@ -58,12 +58,13 @@ if(App\Session::getUser($id)) {
                     <?php } ?>
                 </div>
 
-            
-            <input type="submit" name="submit" value="Save changes">
-            
-            <a href="index.php?ctrl=security&action=deleteUser&id=<?= $user->getId() ?>" class="delete-btn">
-                <i class="fa-solid fa-trash-can"></i>
-            </a>
+            <div>
+                <input type="submit" name="submit" value="Save changes">
+                
+                <a href="index.php?ctrl=security&action=deleteUser&id=<?= $user->getId() ?>" class="delete-btn">
+                    <i class="fa-solid fa-trash-can"></i>
+                </a>
+            </div>
 
             <p>Member since : <?= $user->getRegistrationDate() ?></p>
         </form>

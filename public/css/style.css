@@ -6,7 +6,7 @@
 }
 
 #forum {
-	padding: 10% 5%;
+	padding: 5%;
 	min-height: 100vh;
 }
 
@@ -83,16 +83,17 @@ nav {
 .errorMsg,
 .successMsg {
 	font-size: 20px;
-	width: 80%;
     text-align: center;
     margin: 1rem auto;
+	font-weight: normal;
     position: sticky;
     top: 20px;
+	width:90%;
 }
 
 .errorMsg {
-	color: rgb(255 255 255);
-    background-color: rgb(233 56 56);
+	color: rgb(254, 239, 239);
+    background-color: rgb(176, 66, 66);
 }
 
 .successMsg {
@@ -107,6 +108,10 @@ a {
 }
 
 @media screen and (max-width:768px) {
+
+	#forum {
+		padding: 10% 5%;
+	}
 
 	.errorMsg,
 	.successMsg {

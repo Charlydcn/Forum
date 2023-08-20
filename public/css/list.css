@@ -1,8 +1,12 @@
-ul {
-    list-style-type: none;
-}
 
-ul li {
-    margin:1rem auto;
-    font-size: 18px;
+
+@media screen and (max-width:768px) {
+    ul {
+        list-style-type: none;
+    }
+    
+    ul li {
+        margin:1rem auto;
+        font-size: 18px;
+    }
 }
